@@ -448,6 +448,18 @@ button.ctl{text-align:left;display:flex;align-items:center}
   transition:background-position var(--dur-3) var(--ease-out);
 }
 .acard__arch .mark{width:44px;height:44px;color:rgba(249,206,174,.42)}
+/* карточка с фото: тот же силуэт арки, кадр под маской */
+.acard__arch--photo{padding:0;overflow:hidden;background:var(--rose-500)}
+.acard__arch--photo picture,.acard__arch--photo img{width:100%;height:100%;display:block}
+.acard__arch--photo img{object-fit:cover;object-position:50% 22%}
+.acard__note{
+  margin-top:var(--s-3);font-size:var(--fs-micro);color:var(--text-muted);
+  display:flex;align-items:flex-start;gap:var(--s-2);
+}
+.acard__note .mark{width:16px;height:16px;flex:none;margin-top:2px}
+/* подсказка, что рельсу можно листать */
+.rail{scroll-padding-inline:var(--s-6)}
+.rail::after{content:"";flex:0 0 var(--s-4)}
 .acard__meta{padding:var(--s-3)}
 .acard__meta b{display:block;font-size:var(--fs-micro);font-weight:var(--fw-med);
                color:var(--text-head)}

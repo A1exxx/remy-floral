@@ -23,6 +23,7 @@ TILES = [
     ("g-01", os.path.join(STOCK, "A-34427286.jpg"), 760, 0.42),
     ("g-03", os.path.join(STOCK, "A-11626588.jpg"), 460, 0.48),
     ("g-05", os.path.join(STOCK, "A-20156577.jpg"), 460, 0.45),
+    ("g-07", os.path.join(STOCK, "A-15801495.jpg"), 760, 0.40),
 ]
 # hero страницы и фон блока «звёздная доставка»
 HERO = (os.path.join(STOCK, "A-38390245.jpg"), 1200, 1600)

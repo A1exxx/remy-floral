@@ -76,12 +76,14 @@
     { id: 'g-03', cls: 'tile--sq', w: 460,
       alt: 'Букет из тёмно-красных роз в кремовой шляпной коробке' },
     { plate: 'Моменты остаются навсегда' },
-    { id: 'g-05', cls: 'tile--sq', w: 460,
-      alt: 'Плотная композиция из кремовых и пудрово-розовых пионовидных роз' },
+    /* Реальный кадр бутика стоит в МАЛЕНЬКОМ слоте осознанно: исходник даёт
+       473px, а широкий слот требует ~700 — там он выглядел мылом. */
+    { id: 'tile-11', cls: 'tile--sq', cap: 'Наш бутик',
+      alt: 'Витрина бутика Remy: букеты и шляпные коробки на подсвеченных стеллажах' },
     { id: 'tile-10', cls: 'tile--sq',
       alt: 'Плотный букет из ярко-розовых кустовых роз с бордовой лентой Remy' },
-    { id: 'tile-11', cls: 'tile--hero', cap: 'Наш бутик на Абая',
-      alt: 'Витрина бутика Remy: букеты и шляпные коробки на подсвеченных стеллажах' }
+    { id: 'g-07', cls: 'tile--hero', w: 760,
+      alt: 'Букет из пудрово-розовых пионов в белом фатине' }
   ];
 
   /* Карточки ролей, а НЕ портреты конкретных артистов: состав ещё не собран,
@@ -178,13 +180,26 @@
     var rail = $('#rail');
     if (!rail) return;
     rail.innerHTML = ARTISTS.map(function (a) {
+      var inner = a.img
+        ? '<span class="acard__arch acard__arch--photo">' +
+            '<picture>' +
+              '<source srcset="assets/artists/' + a.img + '.avif" type="image/avif">' +
+              '<img src="assets/artists/' + a.img + '.webp" alt="' + (a.alt || '') + '" ' +
+                   'width="360" height="480" loading="lazy" decoding="async">' +
+            '</picture>' +
+          '</span>'
+        : '<span class="acard__arch"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg></span>';
+
+      var meta = a.img
+        ? '<span class="acard__meta"><b>' + a.role + '</b></span>'
+        : '<span class="acard__meta"><b>' + a.role + '</b>' +
+            '<span class="acard__line"></span>' +
+            '<span class="acard__line acard__line--short"></span>' +
+          '</span>';
+
       return '<button type="button" class="acard" role="listitem" data-wa="star" ' +
-             'aria-label="' + a.role + ' — состав готовится, написать в WhatsApp">' +
-        '<span class="acard__arch"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg></span>' +
-        '<span class="acard__meta"><b>' + a.role + '</b>' +
-          '<span class="acard__line"></span>' +
-          '<span class="acard__line acard__line--short"></span>' +
-        '</span>' +
+             'aria-label="' + a.role + ' — формат вручения, написать в WhatsApp">' +
+        inner + meta +
       '</button>';
     }).join('');
   }
