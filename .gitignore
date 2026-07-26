@@ -1,0 +1,12 @@
+# исходные кадры Instagram — держим локально, в репозиторий не тянем
+assets/bouquets/_source/
+assets/_fonts_full/
+assets/fonts/*.unused
+
+# служебное от инструментов
+tools/_cdp_profile/
+tools/_prof/
+tools/*.png
+!tools/qr-*.png
+__pycache__/
+*.pyc
