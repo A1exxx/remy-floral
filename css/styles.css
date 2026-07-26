@@ -339,7 +339,14 @@ button.ctl{text-align:left;display:flex;align-items:center}
       display:flex;gap:var(--s-2);align-items:flex-start;min-height:3em}
 .note .mark{width:16px;height:16px;flex:none;margin-top:2px}
 .alt-links{margin-top:var(--s-4);font-size:var(--fs-micro);color:var(--text-muted)}
-.alt-links a{color:var(--accent);text-underline-offset:3px}
+/* Резервные каналы — это запасной CTA, а не ссылка в тексте. Тянем
+   тап-зону до 44px вертикали, не раздвигая строку: padding + отрицательный
+   margin. Формально WCAG даёт исключение inline-ссылкам, но промахнуться
+   по «Позвонить» на мероприятии дороже, чем соблюсти букву. */
+.tappable{
+  display:inline-block;color:var(--accent);text-underline-offset:3px;
+  padding-block:14px;margin-block:-14px;
+}
 
 /* ── Звёздная доставка ─────────────────────────────────────── */
 .stars{
@@ -411,21 +418,38 @@ button.ctl{text-align:left;display:flex;align-items:center}
 .field:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
 
 /* ── Доверие ───────────────────────────────────────────────── */
-.facts{display:grid;gap:var(--s-3);grid-template-columns:repeat(2,minmax(0,1fr));margin-top:var(--s-6)}
-@media (min-width:900px){ .facts{grid-template-columns:repeat(4,minmax(0,1fr))} }
-.fact{
-  padding:var(--s-5);background:var(--surface);border-radius:var(--r-hair);
-  box-shadow:inset 0 0 0 1px var(--hairline);text-decoration:none;color:inherit;display:block;
-  transition:box-shadow var(--dur-2) var(--ease-out);
+/* Доверие подано строкой, а не сеткой одинаковых карточек со статистикой:
+   «большая цифра + мелкая подпись» ×4 — самый узнаваемый SaaS-штамп.
+   Рейтинг работает якорем, остальное течёт текстом со знаком-разделителем. */
+.rating{
+  display:inline-flex;align-items:baseline;gap:var(--s-3);margin-top:var(--s-6);
+  text-decoration:none;color:inherit;padding-block:var(--s-2);
 }
-@media (hover:hover){ .fact:hover{box-shadow:inset 0 0 0 1px var(--border)} }
-.fact:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
-.fact b{display:block;font-family:var(--ff-display);font-size:var(--fs-h4);
-        color:var(--text-head);line-height:1.1;letter-spacing:var(--ls-display)}
-.fact span{display:block;margin-top:var(--s-2);font-size:var(--fs-micro);color:var(--text-muted)}
-.quotes{display:grid;gap:var(--s-4);margin-top:var(--s-6)}
+.rating b{font-family:var(--ff-display);font-weight:var(--fw-bold);
+          font-size:clamp(3rem,2rem + 5vw,4.5rem);line-height:.9;
+          letter-spacing:var(--ls-display);color:var(--text-head)}
+.rating span{font-size:var(--fs-body);color:var(--text-muted);max-width:14ch}
+.rating u{text-decoration-color:var(--divider);text-underline-offset:4px}
+.rating:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+@media (hover:hover){ .rating:hover u{text-decoration-color:var(--accent)} }
+
+.facts-line{
+  margin-top:var(--s-5);padding-top:var(--s-5);border-top:1px solid var(--hairline);
+  display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-2) var(--s-4);
+  font-size:var(--fs-body);color:var(--text);
+}
+/* На узком экране пункты и так переносятся по одному в строку —
+   разделитель повисает в конце строки сиротой, поэтому прячем. */
+.facts-line .mark{display:none;width:16px;height:16px;color:var(--divider);flex:none}
+@media (min-width:900px){ .facts-line .mark{display:block} }
+.facts-line a{color:inherit;text-underline-offset:3px;
+              display:inline-block;padding-block:9px;margin-block:-9px}
+
+.quotes{display:grid;gap:var(--s-5);margin-top:var(--s-7)}
 @media (min-width:760px){ .quotes{grid-template-columns:1fr 1fr} }
-.quote{padding-left:var(--s-4);border-left:2px solid var(--divider)}
+/* без border-left: цитату открывает фирменный знак */
+.quote{display:grid;grid-template-columns:auto 1fr;gap:var(--s-3);align-items:start}
+.quote .mark{width:16px;height:16px;color:var(--divider);margin-top:.55em;flex:none}
 .quote p{font-family:var(--ff-display);font-size:var(--fs-lead);color:var(--text-head);
          line-height:1.35;text-wrap:pretty}
 .quote cite{display:block;margin-top:var(--s-2);font-size:var(--fs-micro);
@@ -507,7 +531,9 @@ dialog.sheet::backdrop{background:var(--scrim)}
 .opt__chip{font-size:var(--fs-micro);padding:3px var(--s-2);border-radius:var(--r-pill)}
 .opt__chip--now{background:var(--peach-400);color:var(--rose-500)}
 .opt__chip--ask{box-shadow:inset 0 0 0 1px var(--rose-200);color:var(--rose-400)}
-.opt[aria-selected="true"]{background:var(--peach-200);box-shadow:inset 3px 0 0 var(--rose-500)}
+/* без боковой полоски: выбранное состояние уже несут фон и галка,
+   а цветной border-left на пункте списка — типовой AI-приём */
+.opt[aria-selected="true"]{background:var(--peach-200)}
 .opt:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
 .opt__check{width:24px;height:24px;color:var(--rose-500);opacity:0;transform:scale(.8);
             transition:opacity var(--dur-3) var(--ease-out),transform var(--dur-3) var(--ease-out)}

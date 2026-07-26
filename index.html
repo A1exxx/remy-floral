@@ -141,8 +141,8 @@
       <p class="micro" style="margin-top:var(--s-3)">Откроется WhatsApp с готовым сообщением. Отправляете его вы — ничего не улетит без вашего нажатия.</p>
 
       <p class="alt-links">Не пользуетесь WhatsApp?
-        <a href="tel:+77056666163" data-goal="call_click">Позвонить</a> ·
-        <a href="https://www.instagram.com/remy_floral/" target="_blank" rel="noopener">Instagram</a>
+        <a class="tappable" href="tel:+77056666163" data-goal="call_click">Позвонить</a> ·
+        <a class="tappable" href="https://www.instagram.com/remy_floral/" target="_blank" rel="noopener">Instagram</a>
       </p>
       <p class="micro" id="waReturn" hidden role="status" style="margin-top:var(--s-3)">
         Мы на связи. Если чат так и не открылся — позвоните: <a href="tel:+77056666163">+7 705 666 61 63</a>.
@@ -207,25 +207,33 @@
     <span class="eyebrow"><svg class="mark"><use href="#mark"/></svg>Почему нам верят</span>
     <h2 class="h2" id="trust-h" style="margin-top:var(--s-2)">Качество в деталях</h2>
 
-    <div class="facts">
-      <a class="fact" href="https://2gis.kz/almaty/firm/70000001115419179" target="_blank" rel="noopener"
-         aria-label="Рейтинг 5.0 в 2ГИС по 24 отзывам, откроется в новой вкладке">
-        <b>5.0</b><span>в 2ГИС по 24 отзывам</span></a>
-      <a class="fact" href="https://www.instagram.com/remy_floral/" target="_blank" rel="noopener"
-         aria-label="76 000 подписчиков в Instagram, откроется в новой вкладке">
-        <b>76 000</b><span>подписчиков в Instagram</span></a>
-      <div class="fact"><b>Каждый день</b><span>свежая поставка цветов</span></div>
-      <div class="fact"><b>10:00 — 00:00</b><span>работаем без выходных</span></div>
-    </div>
+    <a class="rating" href="https://2gis.kz/almaty/firm/70000001115419179" target="_blank" rel="noopener"
+       aria-label="Рейтинг 5.0 в 2ГИС по 24 отзывам, откроется в новой вкладке">
+      <b>5.0</b><span><u>в 2ГИС</u> по 24 отзывам</span>
+    </a>
+
+    <p class="facts-line">
+      <a href="https://www.instagram.com/remy_floral/" target="_blank" rel="noopener">76&nbsp;000 подписчиков в Instagram</a>
+      <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
+      <span>свежая поставка каждый день</span>
+      <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
+      <span>10:00 — 00:00 без выходных</span>
+    </p>
 
     <div class="quotes">
       <blockquote class="quote">
-        <p>Срочный свадебный букет собрали меньше чем за сутки</p>
-        <cite>отзыв в 2ГИС</cite>
+        <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
+        <div>
+          <p>Срочный свадебный букет собрали меньше чем за сутки</p>
+          <cite>отзыв в 2ГИС</cite>
+        </div>
       </blockquote>
       <blockquote class="quote">
-        <p>…Сразу видно, все сделано со вкусом</p>
-        <cite>отзыв в 2ГИС</cite>
+        <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
+        <div>
+          <p>…Сразу видно, все сделано со вкусом</p>
+          <cite>отзыв в 2ГИС</cite>
+        </div>
       </blockquote>
     </div>
   </div>
@@ -264,7 +272,7 @@
         <h3>Адрес</h3>
         <p>пр. Абая, 118 блок 2, Алматы</p>
         <p style="margin-top:var(--s-2)">
-          <a href="https://2gis.kz/almaty/firm/70000001115419179" target="_blank" rel="noopener">Открыть в 2ГИС →</a>
+          <a class="tappable" href="https://2gis.kz/almaty/firm/70000001115419179" target="_blank" rel="noopener">Открыть в 2ГИС →</a>
         </p>
       </div>
       <div>
@@ -274,7 +282,7 @@
       </div>
       <div>
         <h3>Связь</h3>
-        <p><a href="tel:+77056666163" data-goal="call_click">+7 705 666 61 63</a></p>
+        <p><a class="tappable" href="tel:+77056666163" data-goal="call_click">+7 705 666 61 63</a></p>
         <p class="micro" style="margin-top:var(--s-2)">Цветы · Кондитерские изделия · Товары для праздников · Подарочная упаковка</p>
       </div>
     </div>
@@ -306,7 +314,7 @@
       </button>
     </div>
     <input type="search" class="sheet__search" id="citySearch" placeholder="Найти город"
-           autocomplete="off" enterkeyhint="search" aria-controls="cityList">
+           aria-label="Найти город" autocomplete="off" enterkeyhint="search" aria-controls="cityList">
     <p class="sr-only" aria-live="polite" id="cityCount"></p>
   </div>
   <div class="sheet__list" id="cityList" role="listbox" aria-labelledby="sheetTitle"></div>
