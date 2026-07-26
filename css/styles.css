@@ -12,7 +12,10 @@
      из палитры сознательно не используются. Полутона делаются
      ТОЛЬКО прозрачностью этих двух, новых оттенков не заводим. */
   --rose-500:#711339;
-  --cream:#FFFBF3;
+  /* «Персиковый бежевый» из брендбука. Взят пипеткой с обложки —
+     логотип «Remy» напечатан ровно этим цветом. Раньше здесь стоял
+     «цветочный белый» #FFFBF3, он читался как обычный белый. */
+  --cream:#F9CEAE;
 
   /* ── Семантика · молочное поле ───────────────────────────── */
   --bg:var(--cream);
@@ -80,7 +83,7 @@
   /* ── Тени: ровно 2 функциональные, тонированные ──────────── */
   --sh-sheet:0 -12px 32px -8px rgba(87,16,41,.18);
   --sh-bar:0 -8px 24px -12px rgba(87,16,41,.14);
-  --sh-plate:inset 0 0 0 1px rgba(255,251,243,.14);
+  --sh-plate:inset 0 0 0 1px rgba(249,206,174,.14);
 
   --z-arc:1; --z-content:2; --z-sticky:40; --z-grain:55; --z-sheet:70; --z-skip:90;
 
@@ -99,19 +102,19 @@
   --surface-sunken:transparent;
   --text:var(--cream);           /* 10.97:1 */
   --text-head:var(--cream);
-  --text-muted:rgba(255,251,243,.82);  /* 7.7:1 */
-  --border:rgba(255,251,243,.55);      /* 4.9:1 */
-  --divider:rgba(255,251,243,.30);
-  --hairline:rgba(255,251,243,.12);   /* дуги-декор поверх текста были заметнее самого текста */
+  --text-muted:rgba(249,206,174,.82);  /* 7.7:1 */
+  --border:rgba(249,206,174,.55);      /* 4.9:1 */
+  --divider:rgba(249,206,174,.30);
+  --hairline:rgba(249,206,174,.12);   /* дуги-декор поверх текста были заметнее самого текста */
   --accent:var(--cream);
-  --accent-hover:rgba(255,251,243,.88);
+  --accent-hover:rgba(249,206,174,.88);
   --on-accent:var(--rose-500);
   --focus:var(--cream);
 }
 
 @media (prefers-contrast: more){
   :root{ --text-muted:var(--rose-500); --border:var(--rose-500); --divider:rgba(113,19,57,.6) }
-  .on-rose{ --text-muted:var(--cream); --border:var(--cream); --divider:rgba(255,251,243,.6) }
+  .on-rose{ --text-muted:var(--cream); --border:var(--cream); --divider:rgba(249,206,174,.6) }
 }
 
 /* Шрифты подключены отдельным <link> на css/fonts.css в <head>.
@@ -198,7 +201,7 @@ button,input,select{font:inherit;color:inherit}
 @media (hover:hover){
   .btn--primary:hover{background:var(--accent-hover)}
   .btn--ghost:hover{background:rgba(113,19,57,.08)}
-  .on-rose .btn--ghost:hover{background:rgba(255,251,243,.14)}
+  .on-rose .btn--ghost:hover{background:rgba(249,206,174,.14)}
 }
 .btn-row{display:flex;flex-direction:column;gap:var(--s-3);margin-top:var(--s-6)}
 .btn-row .btn{width:100%}
@@ -218,7 +221,7 @@ button,input,select{font:inherit;color:inherit}
 .cross svg{position:absolute;width:150%;height:150%;left:-25%;top:-20%;
            stroke:var(--hairline);fill:none;stroke-width:1}
 .watermark{position:absolute;right:-24px;bottom:-24px;width:120px;height:120px;
-           color:rgba(255,251,243,.14);pointer-events:none}
+           color:rgba(249,206,174,.14);pointer-events:none}
 
 /* ── Grain: один фиксированный слой на всю страницу ────────── */
 .grain{
@@ -258,7 +261,7 @@ button,input,select{font:inherit;color:inherit}
 .topbar.is-solid .topbtn{background:var(--rose-500);color:var(--cream)}
 .topbar.is-solid .topbtn:focus-visible{outline-color:var(--rose-500)}
 @media (hover:hover){
-  .topbtn:hover{background:rgba(255,251,243,.86)}
+  .topbtn:hover{background:rgba(249,206,174,.86)}
   .topbar.is-solid .topbtn:hover{background:rgba(113,19,57,.86)}
 }
 .iconbtn{
@@ -271,11 +274,11 @@ button,input,select{font:inherit;color:inherit}
 .iconbtn svg{width:22px;height:22px}
 .iconbtn:active{transform:scale(.92)}
 .iconbtn:focus-visible{outline:2px solid var(--cream);outline-offset:2px}
-@media (hover:hover){ .iconbtn:hover{background:rgba(255,251,243,.16)} }
+@media (hover:hover){ .iconbtn:hover{background:rgba(249,206,174,.16)} }
 
 /* после ухода с hero панель садится на молочный фон и меняет цвета */
 .topbar.is-solid{
-  background:rgba(255,251,243,.94);border-bottom-color:var(--hairline);
+  background:rgba(249,206,174,.94);border-bottom-color:var(--hairline);
   backdrop-filter:blur(10px);
 }
 .topbar.is-solid .iconbtn{color:var(--rose-500)}
@@ -327,6 +330,7 @@ button,input,select{font:inherit;color:inherit}
   text-align:center;gap:clamp(14px,2.6vh,26px);
 }
 .cover__mark{width:clamp(190px,50vw,400px);height:auto}
+
 /* Капс в засечном — так же, как брендбук набирает эту фразу на
    баннере (стр 38) и на витрине (стр 35).
    Размер в vw, а не в clamp по rem: строка обязана остаться в ОДНУ
@@ -335,14 +339,10 @@ button,input,select{font:inherit;color:inherit}
   font-family:var(--ff-display);font-weight:var(--fw-bold);
   font-size:clamp(0.8125rem,4.6vw,1.625rem);
   text-transform:uppercase;letter-spacing:.10em;white-space:nowrap;
-  color:var(--cream);margin:0;line-height:1.2;
+  color:var(--cream);line-height:1.2;
+  /* Строка стояла впритык к логотипу и читалась как его часть */
+  margin:clamp(10px,2.4vh,30px) 0 0;
   text-shadow:0 1px 16px rgba(40,0,17,.55);
-}
-.cover__city{
-  font-family:var(--ff-ui);font-weight:var(--fw-med);
-  font-size:var(--fs-micro);text-transform:uppercase;letter-spacing:.22em;
-  color:var(--text-muted);margin:0;
-  text-shadow:0 1px 12px rgba(40,0,17,.55);
 }
 
 .cover__actions{
@@ -379,8 +379,8 @@ button,input,select{font:inherit;color:inherit}
 .abtn:active{transform:scale(.985)}
 .abtn:focus-visible{outline:2px solid var(--cream);outline-offset:3px}
 @media (hover:hover){
-  .abtn:hover{background:rgba(255,251,243,.16)}
-  .abtn--solid:hover{background:rgba(255,251,243,.86)}
+  .abtn:hover{background:rgba(249,206,174,.16)}
+  .abtn--solid:hover{background:rgba(249,206,174,.86)}
 }
 
 /* На широком экране три главных действия встают в ряд — экран
@@ -434,7 +434,7 @@ button,input,select{font:inherit;color:inherit}
 .lang__chev{width:16px;height:16px;flex:none;
             transition:transform var(--dur-2) var(--ease-out)}
 .lang[open] .lang__chev{transform:rotate(180deg)}
-@media (hover:hover){ .lang__btn:hover{background:rgba(255,251,243,.14)} }
+@media (hover:hover){ .lang__btn:hover{background:rgba(249,206,174,.14)} }
 .topbar.is-solid .lang__btn:hover,
 .lang--dark .lang__btn:hover{background:rgba(113,19,57,.08)}
 
@@ -442,7 +442,7 @@ button,input,select{font:inherit;color:inherit}
   position:absolute;top:calc(100% + 6px);right:0;z-index:var(--z-sheet);
   min-width:132px;padding:6px;margin:0;list-style:none;
   background:var(--rose-500);border-radius:14px;
-  box-shadow:0 12px 28px -10px rgba(40,0,17,.55),inset 0 0 0 1px rgba(255,251,243,.28);
+  box-shadow:0 12px 28px -10px rgba(40,0,17,.55),inset 0 0 0 1px rgba(249,206,174,.28);
 }
 .lang--dark .lang__menu{background:var(--cream);
   box-shadow:0 12px 28px -10px rgba(40,0,17,.30),inset 0 0 0 1px rgba(113,19,57,.28)}
@@ -452,11 +452,11 @@ button,input,select{font:inherit;color:inherit}
   border-radius:10px;font-size:var(--fs-micro);color:var(--cream);text-align:left;
 }
 .lang--dark .lang__menu button{color:var(--rose-500)}
-.lang__menu button[aria-current="true"]{background:rgba(255,251,243,.18);font-weight:var(--fw-med)}
+.lang__menu button[aria-current="true"]{background:rgba(249,206,174,.18);font-weight:var(--fw-med)}
 .lang--dark .lang__menu button[aria-current="true"]{background:rgba(113,19,57,.10)}
 .lang__menu button:focus-visible{outline:2px solid currentColor;outline-offset:-2px}
 @media (hover:hover){
-  .lang__menu button:hover{background:rgba(255,251,243,.12)}
+  .lang__menu button:hover{background:rgba(249,206,174,.12)}
   .lang--dark .lang__menu button:hover{background:rgba(113,19,57,.07)}
 }
 
@@ -773,7 +773,7 @@ select.ctl.sr-only{width:1px;min-height:0;height:1px;padding:0}
 .channel span{display:block;font-size:var(--fs-micro);color:var(--text-muted)}
 .channel:active{transform:scale(.99)}
 .channel:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
-@media (hover:hover){ .channel:hover{background:rgba(255,251,243,.12)} }
+@media (hover:hover){ .channel:hover{background:rgba(249,206,174,.12)} }
 
 .foot{margin-top:var(--s-8);display:grid;gap:var(--s-6)}
 @media (min-width:760px){ .foot{grid-template-columns:repeat(3,1fr)} }
@@ -787,7 +787,7 @@ select.ctl.sr-only{width:1px;min-height:0;height:1px;padding:0}
   position:fixed;inset:auto 0 0 0;z-index:var(--z-sticky);
   display:flex;align-items:center;gap:var(--s-3);
   padding:var(--s-3) var(--pad-x) max(var(--s-3),env(safe-area-inset-bottom));
-  background:rgba(255,251,243,.92);backdrop-filter:blur(10px);
+  background:rgba(249,206,174,.92);backdrop-filter:blur(10px);
   box-shadow:var(--sh-bar);border-top:1px solid var(--hairline);
   transform:translateY(110%);opacity:0;will-change:transform;
   transition:transform var(--dur-4) var(--ease-out),opacity var(--dur-4) var(--ease-out);
