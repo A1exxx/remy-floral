@@ -101,42 +101,56 @@
   /* ─── Утилиты ─────────────────────────────────────────────── */
   var $ = function (s, r) { return (r || document).querySelector(s); };
 
+  var _src = null;
   function source() {
+    if (_src) return _src;
     try {
       var q = new URLSearchParams(location.search);
       /* ?s=vitrina — короткая метка из печатного QR: чем короче URL,
          тем ниже version кода и надёжнее скан с наклейки 3 см.
          utm_* поддерживаем для ссылок из Instagram и рассылок. */
       var s = q.get('s') || q.get('utm_content') || q.get('utm_source');
-      if (s) sessionStorage.setItem('remy_src', s);
-      return sessionStorage.getItem('remy_src') || 'сайт';
-    } catch (e) { return 'сайт'; }
+      if (s) { _src = s; sessionStorage.setItem('remy_src', s); }
+      _src = _src || sessionStorage.getItem('remy_src') || 'сайт';
+      return _src;
+    } catch (e) { return _src || 'сайт'; }
+  }
+
+  /* Порядок строк не случайный: WhatsApp ставит курсор в КОНЕЦ префилла.
+     Поэтому служебные строки идут первыми, а единственная строка под
+     дозаполнение — последней, прямо под курсором. Раньше пустые «Повод:»
+     висели в середине и оставались незаполненными.
+     Строку «Город» не печатаем, если город не выбран: «Город: не указан»
+     выглядит как ошибка формы. */
+  function head(c, extra) {
+    var lines = [];
+    if (c.city) lines.push('Город: ' + c.city);
+    if (extra) lines.push(extra);
+    lines.push('Источник: ' + c.src);
+    return lines.join('\n');
   }
 
   var TPL = {
     order: function (c) {
-      return ['Здравствуйте, Remy. Хочу заказать букет.', '',
-        'Город: ' + c.city, 'Повод: ', 'Когда нужно: ', '',
-        'Источник: ' + c.src].join('\n');
+      return 'Здравствуйте, Remy! Хочу заказать букет.\n' + head(c) +
+             '\n\nПовод и когда нужно: ';
     },
     ask: function (c) {
-      return ['Здравствуйте, Remy. Нужен букет в другой город.', '',
-        'Город: ' + c.city, 'Дата: ', '',
-        'Подскажите, получится ли доставить и сколько это будет стоить.', '',
-        'Источник: ' + c.src].join('\n');
+      return 'Здравствуйте, Remy! Нужен букет в другой город.\n' + head(c) +
+             '\n\nПодскажите, получится ли доставить, за какой срок и сколько будет стоить. Дата: ';
     },
     star: function (c) {
-      return ['Здравствуйте, Remy. Интересует ЗВЁЗДНАЯ ДОСТАВКА — букет привозит знаменитость.', '',
-        'Город: ' + c.city, 'Повод: ', 'Примерная дата: ', '',
-        'Хочу первым узнать имена артистов и цены.', '',
-        'Метка: STAR / Источник: ' + c.src].join('\n');
+      return 'Здравствуйте, Remy! Интересует ЗВЁЗДНАЯ ДОСТАВКА — букет привозит знаменитость.\n' +
+             head(c, 'Метка: STAR') +
+             '\n\nХочу первым узнать имена артистов и цены. Повод: ';
     },
     today: function (c) {
-      return ['Здравствуйте, Remy. Покажите, какие букеты есть сегодня.', '',
-        'Город: ' + c.city, '', 'Источник: ' + c.src].join('\n');
+      return 'Здравствуйте, Remy! Покажите, какие букеты есть сегодня.\n' + head(c) +
+             '\n\nИщу букет: ';
     },
     question: function (c) {
-      return 'Здравствуйте, Remy. Подскажите, пожалуйста: \n\nИсточник: ' + c.src;
+      return 'Здравствуйте, Remy! Пишу с сайта.\n' + head(c) +
+             '\n\nХочу спросить: ';
     }
   };
 
@@ -144,7 +158,7 @@
      Кодировать один раз — двойное кодирование покажет «%D0%9F» в чате. */
   function waLink(kind, city) {
     var build = TPL[kind] || TPL.question;
-    var text = build({ city: city || 'не указан', src: source() });
+    var text = build({ city: city || null, src: source() });
     return 'https://wa.me/' + CONTACT.waPhone + '?text=' + encodeURIComponent(text);
   }
 
@@ -175,8 +189,9 @@
       '</figure>';
     }).join('');
     box.innerHTML = html;
-    var first = box.querySelector('img');
-    if (first) { first.loading = 'eager'; first.setAttribute('fetchpriority', 'high'); }
+    /* eager/high тут НЕ ставим: плитка гарантированно за фолдом
+       (hero занимает 100dvh) и конкурировала бы приоритетом
+       с настоящим LCP — фоном hero. Дыру закрывает LQIP. */
   }
 
   /* ─── Карточки артистов ───────────────────────────────────── */
@@ -401,9 +416,10 @@
   function wireLinks() {
     Array.prototype.forEach.call(document.querySelectorAll('[data-wa]'), function (el) {
       var kind = el.getAttribute('data-wa');
-      if (el.tagName === 'A' && (!el.getAttribute('href') || el.getAttribute('href') === '#')) {
-        el.href = waLink(kind, null);
-      }
+      /* href переписываем ВСЕГДА: у карточки в контактах он уже прописан
+         в разметке, и при проверке «только если #» она открывала пустой
+         чат — без приветствия, города и метки QR. */
+      if (el.tagName === 'A') el.href = waLink(kind, null);
       el.addEventListener('click', function (e) {
         if (el.getAttribute('aria-disabled') === 'true') {
           e.preventDefault();
@@ -476,7 +492,10 @@
 
   /* ─── Возврат на страницу после WhatsApp ─────────────────── */
   window.addEventListener('pageshow', function () {
-    try { if (sessionStorage.getItem('remy_wa') !== '1') return; } catch (e) { return; }
+    try {
+      if (sessionStorage.getItem('remy_wa') !== '1') return;
+      sessionStorage.removeItem('remy_wa');   // иначе показывается каждую загрузку
+    } catch (e) { return; }
     var box = $('#waReturn');
     if (box) box.hidden = false;
   });
