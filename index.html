@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Remy Boutique Floral — премиальные букеты и доставка, Алматы</title>
-<meta name="description" content="Букеты из свежей поставки каждый день. Доставка по Алматы с 10:00 до 00:00. пр. Абая, 118 блок 2. Заказ в WhatsApp: +7 705 666 61 63.">
+<meta name="description" content="Букеты из свежей поставки каждый день. Каталог с ценами, доставка по Алматы с 10:00 до 24:00 без выходных. пр. Абая, 118 блок 2. Заказ в WhatsApp: +7 705 666 61 63.">
 <meta name="theme-color" content="#711339">
 <link rel="canonical" href="https://a1exxx.github.io/remy-floral/">
 
@@ -12,8 +12,8 @@
 <meta property="og:site_name" content="Remy Boutique Floral">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://a1exxx.github.io/remy-floral/">
-<meta property="og:title" content="Дари Remy, если сильно любишь">
-<meta property="og:description" content="Премиальные букеты и доставка по Алматы. Заказ в WhatsApp — покажем, что есть сегодня.">
+<meta property="og:title" content="Remy — история бесконечной любви">
+<meta property="og:description" content="Каталог букетов с ценами и доставка по Алматы. Заказ в WhatsApp — покажем, что есть сегодня.">
 <meta property="og:image" content="https://a1exxx.github.io/remy-floral/assets/og-remy-v1.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -71,6 +71,7 @@
     <img src="assets/logo-remy-peach.svg" alt="" width="470" height="256">
   </a>
   <nav class="topbar__nav" aria-label="Связаться">
+    <a class="topbtn" href="catalog.html">Каталог</a>
     <a class="iconbtn" data-wa="question" href="#" aria-label="Написать в WhatsApp">
       <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
     </a>
@@ -100,9 +101,9 @@
 
   <div class="wrap hero__inner">
     <div class="hero__mid">
-      <span class="eyebrow"><svg class="mark"><use href="#mark"/></svg>Алматы · бутик цветов</span>
-      <h1 class="h1 hero__h1" id="hero-h">Дари Remy, если сильно любишь</h1>
-      <p class="lead">Премиальные букеты из свежей поставки. Соберём и привезём по&nbsp;Алматы — каждый день с&nbsp;10:00 до&nbsp;00:00.</p>
+      <img class="hero__mark" src="assets/logo-remy-peach.svg" alt="Remy" width="470" height="256">
+      <h1 class="h1 hero__h1" id="hero-h">История бесконечной любви</h1>
+      <span class="eyebrow hero__eyebrow">Алматы · бутик цветов</span>
     </div>
   </div>
 
@@ -111,15 +112,16 @@
       <path fill="#FFFBF3" d="M0 120C400 0 1040 0 1440 120Z"/>
     </svg>
     <div class="wrap">
-      <div class="btn-row">
+      <div class="btn-row btn-row--hero">
+        <a class="btn btn--primary" href="catalog.html">Каталог с ценами</a>
         <a class="btn btn--primary" data-wa="order" href="#">
-          <svg class="mark"><use href="#mark"/></svg>Заказать в WhatsApp
+          <svg class="ic"><use href="#i-wa"/></svg>Заказать в WhatsApp
         </a>
-        <a class="btn btn--ghost" href="#stars">Букет привезёт звезда →</a>
+        <a class="btn btn--ghost" href="#vip">VIP-доставка цветов →</a>
       </div>
       <p class="micro hero__meta">
         <a href="https://2gis.kz/almaty/firm/70000001115419179" target="_blank" rel="noopener">5.0 в 2ГИС</a>
-        · пр.&nbsp;Абая, 118 блок 2 · 10:00—00:00
+        · пр.&nbsp;Абая, 118 блок 2 · 10:00—24:00, без выходных
       </p>
     </div>
   </div>
@@ -130,18 +132,21 @@
 <!-- ══════════ ТРИПТИХ ══════════ -->
 <div class="choice">
 
-  <!-- ── Галерея (по центру) ── -->
+  <!-- ── Каталог (по центру) ── -->
   <section id="gallery" aria-labelledby="gallery-h" class="reveal">
-    <span class="eyebrow"><svg class="mark"><use href="#mark"/></svg>Букеты</span>
-    <h2 class="h2" id="gallery-h">Свежая поставка каждый день</h2>
-    <p class="lead" style="margin-top:var(--s-4)">Наличие меняется каждое утро. Напишите, какое настроение нужно — флорист покажет, что есть сегодня.</p>
+    <span class="eyebrow">Готовые букеты</span>
+    <h2 class="h2" id="gallery-h" style="margin-top:var(--s-2)">Собраны и стоят в бутике</h2>
+    <p class="lead" style="margin-top:var(--s-4)">Наличие меняется каждое утро. Выберите — флорист подтвердит, что букет на месте, и соберёт такой же, если разобрали.</p>
 
-    <div class="mosaic" id="mosaic"></div>
+    <div class="cards" id="cards"></div>
+    <p class="cards-note">
+      <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
+      <span>Цены — с наших публикаций. Итоговую стоимость и состав флорист подтверждает в переписке до оплаты.</span>
+    </p>
 
     <div class="btn-row">
-      <a class="btn btn--primary" data-wa="today" href="#">Показать, что есть сегодня</a>
-      <a class="btn btn--ghost" href="https://www.instagram.com/remy_floral/" target="_blank" rel="noopener"
-         aria-label="Смотреть букеты в Instagram, откроется в новой вкладке">Смотреть в Instagram</a>
+      <a class="btn btn--primary" href="catalog.html">Весь каталог с ценами →</a>
+      <a class="btn btn--ghost" data-wa="today" href="#">Что есть сегодня</a>
     </div>
   </section>
 
@@ -150,7 +155,7 @@
     <div class="panel">
       <span class="eyebrow"><svg class="mark"><use href="#mark"/></svg>Обычная доставка</span>
       <h2 class="h2" id="cities-h" style="margin-top:var(--s-2)">Куда привезти</h2>
-      <p class="body" style="margin-top:var(--s-4)">По Алматы привозим сами, каждый день. В другие города Казахстана — по согласованию, до любой оплаты.</p>
+      <p class="body" style="margin-top:var(--s-4)">По Алматы привозим сами, без выходных. В другие города Казахстана — по согласованию, до любой оплаты.</p>
 
       <div style="margin-top:var(--s-5)">
         <label class="lbl" for="city">Город доставки</label>
@@ -179,14 +184,9 @@
     </div>
   </section>
 
-  <!-- ── Звёздная доставка (слева на десктопе) ── -->
-  <section id="stars" aria-labelledby="stars-h" class="reveal">
-    <div class="stars on-rose">
-      <picture class="stars__bg">
-        <source srcset="assets/stars-bg.avif" type="image/avif">
-        <img src="assets/stars-bg.webp" alt="" width="900" height="1200" loading="lazy" decoding="async">
-      </picture>
-      <div class="stars__veil" aria-hidden="true"></div>
+  <!-- ── VIP-доставка (слева на десктопе) ── -->
+  <section id="vip" aria-labelledby="vip-h" class="reveal">
+    <div class="vip on-rose">
       <div class="cross" aria-hidden="true">
         <svg viewBox="0 0 600 600" preserveAspectRatio="none">
           <path d="M-60 520C120 300 380 180 660 150"/>
@@ -195,9 +195,9 @@
       </div>
       <svg class="watermark" aria-hidden="true"><use href="#mark"/></svg>
 
-      <span class="chip"><span class="chip__dot"></span>Готовим к запуску</span>
+      <span class="chip"><span class="chip__dot"></span>Новый проект · готовим к запуску</span>
       <span class="eyebrow" style="display:block;margin-top:var(--s-4)">Впервые в Казахстане</span>
-      <h2 class="h2" id="stars-h" style="margin-top:var(--s-2)">Звёздная доставка</h2>
+      <h2 class="h2" id="vip-h" style="margin-top:var(--s-2)">VIP-доставка цветов</h2>
       <p class="lead" style="margin-top:var(--s-3)">Букет привозит знаменитость — лично, к двери, в нужную минуту.</p>
 
       <div class="body" style="margin-top:var(--s-5);display:grid;gap:var(--s-4)">
@@ -210,16 +210,10 @@
         <li class="step"><span class="step__n">03</span><span><b>Вручение</b><span>Время, слова, песня — согласуем заранее. У вас останется видео.</span></span></li>
       </ul>
 
-      <div class="rail" id="rail" role="list" aria-label="Форматы вручения"></div>
-      <p class="acard__note">
-        <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
-        <span>Фото иллюстративные — показывают формат вручения. Состав артистов объявим, когда откроем запись.</span>
-      </p>
-
-      <p class="body" style="margin-top:var(--s-6)">Собираем состав артистов. Оставьте заявку — назовём имена, даты и цены первыми. Предоплаты нет: сначала присылаем варианты, решаете вы.</p>
+      <p class="body" style="margin-top:var(--s-6)">Сейчас собираем состав артистов. Оставьте заявку — назовём имена, даты и цены первыми. Предоплаты нет: сначала присылаем варианты, решаете вы.</p>
 
       <div class="btn-row">
-        <a class="btn btn--primary" id="starBtn" data-wa="star" href="#">Хочу звёздную доставку</a>
+        <a class="btn btn--primary" id="vipBtn" data-wa="vip" href="#">Хочу VIP-доставку</a>
       </div>
 
       <form class="waitlist" id="waitlist" method="post" novalidate>
@@ -304,7 +298,7 @@
       <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
       <span>свежая поставка каждый день</span>
       <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
-      <span>10:00 — 00:00 без выходных</span>
+      <span>10:00 — 24:00, без выходных</span>
     </p>
   </div>
 </section>
@@ -347,7 +341,7 @@
       </div>
       <div>
         <h3>Часы</h3>
-        <p>Ежедневно, 10:00 — 00:00</p>
+        <p>10:00 — 24:00, без выходных</p>
         <p class="micro" style="margin-top:var(--s-2)">Оплата: наличными или по QR</p>
       </div>
       <div>

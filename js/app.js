@@ -62,41 +62,37 @@
          'возможность, срок и стоимость вручную — напишите, флорист ответит до любой оплаты.'
   };
 
-  /* ─── Галерея ─────────────────────────────────────────────────
-     Замена фото: правится только этот массив. Файлы кладутся
-     в assets/bouquets/, размер 420x420 (апскейл запрещён). */
-  /* Файлы «tile-NN» — реальные кадры Remy (видны фирменные ленты и логотип),
-     «g-NN» — премиальный сток под лицензией Pexels. Порядок чередует их,
-     чтобы разница в резкости не читалась как «часть фото хуже». */
-  var GALLERY = [
-    { id: 'g-01', cls: 'tile--hero', w: 760,
-      alt: 'Букет из розовых роз на тёмном столе в классическом интерьере' },
-    { id: 'tile-04', cls: 'tile--sq',
-      alt: 'Крупный букет из коралловых и персиковых роз с брендированными лентами Remy' },
-    { id: 'g-03', cls: 'tile--sq', w: 460,
-      alt: 'Букет из тёмно-красных роз в кремовой шляпной коробке' },
-    { plate: 'Моменты остаются навсегда' },
-    /* Реальный кадр бутика стоит в МАЛЕНЬКОМ слоте осознанно: исходник даёт
-       473px, а широкий слот требует ~700 — там он выглядел мылом. */
-    { id: 'tile-11', cls: 'tile--sq', cap: 'Наш бутик',
-      alt: 'Витрина бутика Remy: букеты и шляпные коробки на подсвеченных стеллажах' },
-    { id: 'tile-10', cls: 'tile--sq',
-      alt: 'Плотный букет из ярко-розовых кустовых роз с бордовой лентой Remy' },
-    { id: 'g-07', cls: 'tile--wide', w: 760,
-      alt: 'Букет из пудрово-розовых пионов в белом фатине' }
+  /* ─── Каталог ─────────────────────────────────────────────────
+     ЕДИНСТВЕННОЕ место с ценами. Цифры взяты с публикаций самого
+     Remy в Instagram (они вожжены в кадр: «- 34 000»), поэтому это
+     не выдумка, но их надо сверять: цветы дорожают и дешевеют.
+     Названия описательные — они не могут устареть или соврать.
+     Порядок = от доступного к премиальному.
+     Картинки: assets/catalog/b-NN, квадрат ≤480px, апскейл запрещён. */
+  var CATALOG = [
+    { id: 'b-01', name: 'Гортензия с подсолнухом', price: 25000,
+      alt: 'Композиция из гортензии, подсолнуха и кустовых роз в пастельных тонах' },
+    { id: 'b-03', name: 'Голубая гортензия и розы', price: 28000,
+      alt: 'Композиция из синей гортензии с жёлтыми и белыми розами' },
+    { id: 'b-02', name: 'Кустовая пионовидная роза', price: 34000,
+      alt: 'Букет из розовых и кремовых пионовидных роз с лентами Remy' },
+    { id: 'b-07', name: 'Пудровые пионовидные розы', price: 34000,
+      alt: 'Пышный букет из пудрово-розовых пионовидных роз с лентами Remy' },
+    { id: 'b-09', name: 'Гортензия и кустовая роза', price: 42000,
+      alt: 'Круглый букет из голубой гортензии с жёлтыми и белыми цветами' },
+    { id: 'b-04', name: 'Коралловые розы', price: 50000,
+      alt: 'Крупный букет из коралловых роз с брендированными лентами Remy' },
+    { id: 'b-10', name: 'Крупный букет кустовых роз', price: 73000,
+      alt: 'Плотный букет из ярко-розовых кустовых роз' },
+    { id: 'b-06', name: 'Роскошная композиция', price: 74000,
+      alt: 'Большая авторская композиция из гортензии, лилий, подсолнухов и роз' }
   ];
 
-  /* Карточки ролей, а НЕ портреты конкретных артистов: состав ещё не собран,
-     и лицо на карточке обещало бы конкретного человека. Поэтому кадры
-     атмосферные — инструмент, сцена, свет. У кого фото нет, показывается
-     гравированная арка со знаком. */
-  var ARTISTS = [
-    { role: 'Саксофон', img: 'sax', alt: 'Саксофонист играет в тёплом сценическом свете' },
-    { role: 'Актёр', img: 'actor', alt: 'Портрет мужчины в мягком полусвете' },
-    { role: 'Ведущий', img: 'host', alt: 'Мужчина в костюме в резком направленном свете' },
-    { role: 'Музыкант', img: 'music', alt: 'Медь саксофона крупным планом в тёплом свете' },
-    { role: 'Ваш сценарий' }
-  ];
+  /* 25000 -> «25 000 ₸». Неразрывные пробелы: цена не должна рваться
+     переносом строки, иначе «25» и «000 ₸» окажутся на разных строках. */
+  function money(n) {
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₸';
+  }
 
   /* ─── Утилиты ─────────────────────────────────────────────── */
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -139,14 +135,22 @@
       return 'Здравствуйте, Remy! Нужен букет в другой город.\n' + head(c) +
              '\n\nПодскажите, получится ли доставить, за какой срок и сколько будет стоить. Дата: ';
     },
-    star: function (c) {
-      return 'Здравствуйте, Remy! Интересует ЗВЁЗДНАЯ ДОСТАВКА — букет привозит знаменитость.\n' +
-             head(c, 'Метка: STAR') +
+    vip: function (c) {
+      return 'Здравствуйте, Remy! Интересует VIP-ДОСТАВКА ЦВЕТОВ — букет привозит знаменитость.\n' +
+             head(c, 'Метка: VIP') +
              '\n\nХочу первым узнать имена артистов и цены. Повод: ';
     },
     today: function (c) {
       return 'Здравствуйте, Remy! Покажите, какие букеты есть сегодня.\n' + head(c) +
              '\n\nИщу букет: ';
+    },
+    /* Заказ конкретной позиции каталога. Цену пишем в сообщение: флорист
+       сразу видит, на какую сумму рассчитывает клиент, и поправит её,
+       если букет с тех пор подорожал. */
+    item: function (c) {
+      return 'Здравствуйте, Remy! Хочу букет из каталога.\n' +
+             head(c, 'Букет: ' + c.item) +
+             '\n\nКогда нужен и кому: ';
     },
     cert: function (c) {
       return 'Здравствуйте, Remy! Хочу подарочный сертификат.\n' + head(c) +
@@ -160,9 +164,9 @@
 
   /* encodeURIComponent, НЕ encodeURI: иначе «&» обрежет сообщение.
      Кодировать один раз — двойное кодирование покажет «%D0%9F» в чате. */
-  function waLink(kind, city) {
+  function waLink(kind, city, item) {
     var build = TPL[kind] || TPL.question;
-    var text = build({ city: city || null, src: source() });
+    var text = build({ city: city || null, src: source(), item: item || null });
     return 'https://wa.me/' + CONTACT.waPhone + '?text=' + encodeURIComponent(text);
   }
 
@@ -173,28 +177,33 @@
 
   function markWa() { try { sessionStorage.setItem('remy_wa', '1'); } catch (e) {} }
 
-  /* ─── Галерея ─────────────────────────────────────────────── */
-  function buildGallery() {
-    var box = $('#mosaic');
+  /* ─── Каталог ─────────────────────────────────────────────────
+     Вся карточка — одна ссылка, а не «фото + отдельная кнопка»:
+     на телефоне промахнуться мимо кнопки внутри плитки легко,
+     а по самой плитке — нет. */
+  function buildCards(box, limit) {
     if (!box) return;
-    var html = GALLERY.map(function (t) {
-      if (t.plate) {
-        return '<div class="plate"><p>' + t.plate + '</p></div>';
-      }
-      var base = 'assets/bouquets/' + t.id;
-      var px = t.w || 420;
-      var cap = t.cap ? '<figcaption class="tile__cap">' + t.cap + '</figcaption>' : '';
-      return '<figure class="tile ' + t.cls + '" style="background-image:url(' + base + '-lqip.webp)">' +
-        '<picture>' +
-          '<source srcset="' + base + '.avif" type="image/avif">' +
-          '<img src="' + base + '.webp" alt="' + t.alt + '" width="' + px + '" height="' + px + '" ' +
-               'loading="lazy" decoding="async">' +
-        '</picture>' + cap +
-      '</figure>';
+    var items = limit ? CATALOG.slice(0, limit) : CATALOG;
+    box.innerHTML = items.map(function (b) {
+      var base = 'assets/catalog/' + b.id;
+      return '<a class="card" href="#" data-item="' + b.name + ' — ' + money(b.price) + '" ' +
+             'aria-label="' + b.name + ', ' + money(b.price) + ' — заказать в WhatsApp">' +
+        '<span class="card__img" style="background-image:url(' + base + '-lqip.webp)">' +
+          '<picture>' +
+            '<source srcset="' + base + '.avif" type="image/avif">' +
+            '<img src="' + base + '.webp" alt="' + b.alt + '" width="480" height="480" ' +
+                 'loading="lazy" decoding="async">' +
+          '</picture>' +
+        '</span>' +
+        '<span class="card__name">' + b.name + '</span>' +
+        '<span class="card__foot">' +
+          '<b class="card__price">' + money(b.price) + '</b>' +
+          '<span class="card__go">Заказать →</span>' +
+        '</span>' +
+      '</a>';
     }).join('');
-    box.innerHTML = html;
-    /* eager/high тут НЕ ставим: плитка гарантированно за фолдом
-       (hero занимает 100dvh) и конкурировала бы приоритетом
+    /* eager/high тут НЕ ставим: карточки гарантированно за фолдом
+       (hero занимает 100dvh) и конкурировали бы приоритетом
        с настоящим LCP — фоном hero. Дыру закрывает LQIP. */
   }
 
@@ -223,35 +232,6 @@
     }).join('');
   }
 
-  /* ─── Карточки артистов ───────────────────────────────────── */
-  function buildArtists() {
-    var rail = $('#rail');
-    if (!rail) return;
-    rail.innerHTML = ARTISTS.map(function (a) {
-      var inner = a.img
-        ? '<span class="acard__arch acard__arch--photo">' +
-            '<picture>' +
-              '<source srcset="assets/artists/' + a.img + '.avif" type="image/avif">' +
-              '<img src="assets/artists/' + a.img + '.webp" alt="' + (a.alt || '') + '" ' +
-                   'width="360" height="480" loading="lazy" decoding="async">' +
-            '</picture>' +
-          '</span>'
-        : '<span class="acard__arch"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg></span>';
-
-      var meta = a.img
-        ? '<span class="acard__meta"><b>' + a.role + '</b></span>'
-        : '<span class="acard__meta"><b>' + a.role + '</b>' +
-            '<span class="acard__line"></span>' +
-            '<span class="acard__line acard__line--short"></span>' +
-          '</span>';
-
-      return '<button type="button" class="acard" role="listitem" data-wa="star" ' +
-             'aria-label="' + a.role + ' — формат вручения, написать в WhatsApp">' +
-        inner + meta +
-      '</button>';
-    }).join('');
-  }
-
   /* ─── Селектор города ─────────────────────────────────────── */
   var sel, trigger, note, orderBtn, sheet, list, search, count, ctaCtx;
 
@@ -263,25 +243,32 @@
     return null;
   }
 
+  /* Каждая ветка проверяет свой элемент отдельно: на catalog.html
+     селектора города нет вообще, и обращение к orderBtn роняло бы
+     весь скрипт вместе с кнопками заказа. */
   function syncCity() {
     var c = currentCity();
     var noteText = $('#cityNote span');
 
     if (!c) {
       if (noteText) noteText.textContent = NOTE.empty;
-      orderBtn.textContent = 'Сначала выберите город';
-      orderBtn.setAttribute('aria-disabled', 'true');
-      orderBtn.href = '#';
+      if (orderBtn) {
+        orderBtn.textContent = 'Сначала выберите город';
+        orderBtn.setAttribute('aria-disabled', 'true');
+        orderBtn.href = '#';
+      }
       if (ctaCtx) ctaCtx.textContent = 'Букеты из свежей поставки';
       return;
     }
 
     if (noteText) noteText.textContent = NOTE[c.mode];
-    orderBtn.setAttribute('aria-disabled', 'false');
-    orderBtn.textContent = c.mode === 'own'
-      ? 'Заказать доставку по ' + c.acc
-      : 'Уточнить доставку в ' + c.acc;
-    orderBtn.href = waLink(c.mode === 'own' ? 'order' : 'ask', c.name);
+    if (orderBtn) {
+      orderBtn.setAttribute('aria-disabled', 'false');
+      orderBtn.textContent = c.mode === 'own'
+        ? 'Заказать доставку по ' + c.acc
+        : 'Уточнить доставку в ' + c.acc;
+      orderBtn.href = waLink(c.mode === 'own' ? 'order' : 'ask', c.name);
+    }
 
     if (trigger) trigger.textContent = c.name;
     if (ctaCtx) {
@@ -289,11 +276,13 @@
         ? 'Алматы · доставка сегодня'
         : c.name + ' · уточним срок';
     }
-    // общие кнопки тоже получают город
+    // общие кнопки и карточки каталога тоже получают город
     Array.prototype.forEach.call(document.querySelectorAll('[data-wa]'), function (el) {
-      var kind = el.getAttribute('data-wa');
       if (el === orderBtn) return;
-      if (el.tagName === 'A') el.href = waLink(kind, c.name);
+      if (el.tagName === 'A') el.href = waLink(el.getAttribute('data-wa'), c.name);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-item]'), function (el) {
+      el.href = waLink('item', c.name, el.getAttribute('data-item'));
     });
     goal(c.mode === 'own' ? 'city_almaty' : 'city_other');
   }
@@ -457,17 +446,18 @@
           if (trigger) trigger.focus();
           return;
         }
-        if (el.tagName === 'BUTTON') {           // карточки артистов
-          e.preventDefault();
-          var c = currentCity();
-          markWa(); goal('wa_star');
-          window.location.href = waLink('star', c ? c.name : null);
-          return;
-        }
         markWa();
-        goal(kind === 'star' ? 'wa_star' : 'wa_order');
+        goal(kind === 'vip' ? 'wa_vip' : 'wa_order');
       });
     });
+
+    /* Карточки каталога. href проставляем сразу, а не только в syncCity:
+       город чаще всего не выбран, и без этого карточка вела бы в «#». */
+    Array.prototype.forEach.call(document.querySelectorAll('[data-item]'), function (el) {
+      el.href = waLink('item', null, el.getAttribute('data-item'));
+      el.addEventListener('click', function () { markWa(); goal('wa_item'); });
+    });
+
     Array.prototype.forEach.call(document.querySelectorAll('[data-goal]'), function (a) {
       a.addEventListener('click', function () { goal(a.getAttribute('data-goal')); });
     });
@@ -509,10 +499,10 @@
       /* Эндпоинта ещё нет — не делаем вид, что заявка ушла.
          Открываем WhatsApp с уже вписанным контактом. */
       var c = currentCity();
-      var text = ['Здравствуйте, Remy. Запишите меня в список первых на ЗВЁЗДНУЮ ДОСТАВКУ.', '',
+      var text = ['Здравствуйте, Remy. Запишите меня в список первых на VIP-ДОСТАВКУ ЦВЕТОВ.', '',
         'Мой контакт: ' + val,
         'Город: ' + (c ? c.name : 'не указан'), '',
-        'Метка: STAR / Источник: ' + source()].join('\n');
+        'Метка: VIP / Источник: ' + source()].join('\n');
       note.textContent = 'Открываем WhatsApp — останется нажать «отправить».';
       markWa();
       window.location.href = 'https://wa.me/' + CONTACT.waPhone + '?text=' + encodeURIComponent(text);
@@ -533,9 +523,9 @@
   function init() {
     orderBtn = $('#orderBtn');
     ctaCtx = $('#ctaCtx');
-    buildGallery();
+    buildCards($('#cards'), 4);        // витрина на главной
+    buildCards($('#catalog'), 0);      // полный каталог на catalog.html
     buildPacks();
-    buildArtists();
     buildSelect();
     buildSheet();
     wireLinks();

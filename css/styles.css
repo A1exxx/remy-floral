@@ -34,21 +34,28 @@
   --ff-display:"PT Serif",Georgia,"Times New Roman",serif;
   --ff-ui:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
 
-  --fs-h1:clamp(2.50rem,1.25rem + 6.40vw,4.50rem);
-  --fs-h2:clamp(2.00rem,1.13rem + 4.50vw,3.50rem);
-  --fs-h3:clamp(1.75rem,1.00rem + 3.80vw,2.75rem);
-  --fs-h4:clamp(1.375rem,0.90rem + 2.40vw,2.00rem);
-  --fs-lead:clamp(1.125rem,1.00rem + 0.70vw,1.3125rem);
-  --fs-body:clamp(1.00rem,0.94rem + 0.32vw,1.1875rem);
-  --fs-cta:clamp(1.0625rem,1.00rem + 0.40vw,1.25rem);
-  --fs-micro:0.8125rem;
+  /* Шкала поднята на ступень по просьбе заказчика: страницу читают
+     с телефона в шумном зале, мелкий кегль там просто не читается. */
+  --fs-h1:clamp(2.875rem,1.40rem + 7.40vw,5.50rem);
+  --fs-h2:clamp(2.25rem,1.30rem + 5.00vw,4.00rem);
+  --fs-h3:clamp(2.00rem,1.15rem + 4.20vw,3.125rem);
+  --fs-h4:clamp(1.50rem,1.00rem + 2.60vw,2.25rem);
+  --fs-lead:clamp(1.25rem,1.05rem + 0.85vw,1.50rem);
+  --fs-body:clamp(1.0625rem,1.00rem + 0.40vw,1.25rem);
+  --fs-cta:clamp(1.125rem,1.05rem + 0.45vw,1.3125rem);
+  --fs-micro:0.875rem;
 
   --lh-display:1.06; --lh-h4:1.16; --lh-body:1.58; --lh-ui:1.35;
   --ls-display:-0.02em;  /* = кернинг брендбука −2% */
   --ls-caps:0.08em;
   --fw-med:500; --fw-bold:700;
 
-  --maxw-display:14ch; --maxw-lead:32ch; --maxw-text:62ch; --maxw-page:1360px;
+  /* 12ch, а не 14: на выросшем кегле «бесконечной» иначе не влезает
+     в 375px и слово рвётся переносом */
+  /* 46ch, а не 34: узкий lead был рассчитан на hero, где строка стояла
+     под заголовком. В секциях он оставлял рваную колонку слева и пустоту
+     справа — ровно то, на что жаловался заказчик. */
+  --maxw-display:12ch; --maxw-lead:46ch; --maxw-text:62ch; --maxw-page:1360px;
 
   /* ── Пространство ────────────────────────────────────────── */
   --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px;
@@ -174,6 +181,7 @@ button,input,select{font:inherit;color:inherit}
              transform var(--dur-1) var(--ease-out);
 }
 .btn .mark{width:16px;height:16px;flex:none}
+.btn .ic{width:20px;height:20px;flex:none}
 .btn--primary{background:var(--accent);color:var(--on-accent)}
 .btn--ghost{background:transparent;color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
 .btn:active{transform:scale(.985)}
@@ -226,6 +234,26 @@ button,input,select{font:inherit;color:inherit}
               min-height:var(--tap);padding-inline:2px}
 .topbar__logo img{height:clamp(30px,7.5vw,40px);width:auto;transition:none}
 .topbar__nav{display:flex;align-items:center;gap:var(--s-1)}
+/* Каталог — главное действие в панели, поэтому это залитая пилюля,
+   а не ещё одна иконка: иконка каталога никому не читается однозначно. */
+.topbtn{
+  display:inline-flex;align-items:center;height:var(--tap);
+  padding-inline:var(--s-5);margin-right:var(--s-2);
+  border-radius:var(--r-pill);background:var(--peach-500);color:var(--rose-500);
+  font-family:var(--ff-ui);font-weight:var(--fw-med);font-size:var(--fs-micro);
+  text-decoration:none;white-space:nowrap;
+  transition:background-color var(--dur-2) var(--ease-out),
+             color var(--dur-2) var(--ease-out),
+             transform var(--dur-1) var(--ease-out);
+}
+.topbtn:active{transform:scale(.96)}
+.topbtn:focus-visible{outline:2px solid var(--peach-500);outline-offset:3px}
+.topbar.is-solid .topbtn{background:var(--rose-500);color:var(--cream)}
+.topbar.is-solid .topbtn:focus-visible{outline-color:var(--rose-500)}
+@media (hover:hover){
+  .topbtn:hover{background:var(--peach-400)}
+  .topbar.is-solid .topbtn:hover{background:var(--rose-400)}
+}
 .iconbtn{
   width:var(--tap);height:var(--tap);display:grid;place-items:center;
   border-radius:var(--r-pill);color:var(--peach-500);
@@ -257,9 +285,16 @@ button,input,select{font:inherit;color:inherit}
   min-height:100dvh;                    /* НЕ 100vh — на мобиле схлопнется */
   display:grid;grid-template-rows:1fr auto;
 }
-.hero__mid{display:flex;flex-direction:column;justify-content:center;
-           gap:var(--s-4);padding-block:var(--s-5) var(--s-8)}
-.hero__h1{color:var(--text)}            /* #FEF4EC на бордовом = 10.44:1 */
+/* Обложка, а не текстовый блок: логотип, одна строка, три действия.
+   Поэтому по центру — так же, как титул брендбука. */
+.hero__mid{display:flex;flex-direction:column;justify-content:center;align-items:center;
+           text-align:center;gap:var(--s-5);
+           /* нижний отступ обязан быть больше высоты дуги (до 120px),
+              иначе арка молочного блока срезает нижнюю строку */
+           padding-block:var(--s-5) clamp(76px,13vw,150px)}
+.hero__mark{width:clamp(190px,44vw,340px);height:auto}
+.hero__h1{color:var(--text);margin-inline:auto} /* #FEF4EC на бордовом = 10.44:1 */
+.hero__eyebrow{color:var(--peach-400);letter-spacing:.12em}
 /* Дуга живёт на верхней кромке молочного блока, а не на дне .hero:
    иначе .hero__cta со своим фоном просто накрывает её. */
 .hero__cta{
@@ -284,7 +319,8 @@ button,input,select{font:inherit;color:inherit}
   height:clamp(52px,13vw,120px);display:block;pointer-events:none;
 }
 .hero__cta .btn-row{margin-top:0}
-.hero__meta{margin-top:var(--s-4);color:var(--rose-400)}
+.btn-row--hero{justify-content:center}
+.hero__meta{margin-top:var(--s-4);color:var(--rose-400);text-align:center}
 .hero__meta a{color:var(--rose-500);text-underline-offset:3px;
               display:inline-block;padding-block:14px;margin-block:-14px}
 
@@ -296,28 +332,30 @@ button,input,select{font:inherit;color:inherit}
   position:absolute;inset:0;z-index:1;pointer-events:none;
   /* Вуаль ровно настолько, чтобы текст читался: роза сама тёмно-бордовая.
      Раньше она была плотнее и превращала фото в плоскую заливку. */
+  /* Виньетка, а не боковой градиент: заголовок теперь по центру,
+     и односторонняя затемнёнка слева читалась бы как ошибка. */
   background:
-    linear-gradient(180deg,rgba(40,0,17,.30) 0%,rgba(52,4,22,.18) 40%,rgba(78,10,38,.42) 100%),
-    linear-gradient(90deg,rgba(40,0,17,.34) 0%,rgba(40,0,17,0) 70%);
+    linear-gradient(180deg,rgba(40,0,17,.26) 0%,rgba(52,4,22,.08) 42%,rgba(78,10,38,.38) 100%),
+    radial-gradient(122% 80% at 50% 44%,rgba(40,0,17,0) 38%,rgba(40,0,17,.38) 100%);
 }
 .hero__inner{position:relative;z-index:var(--z-content)}
 .hero__h1,.hero .lead,.hero .eyebrow{text-shadow:0 1px 14px rgba(48,0,20,.45)}
 
 @media (min-width:1024px){
-  .hero__mid{max-width:60ch}
-  .hero__bg img{object-position:70% 45%}
+  .hero__mid{max-width:60ch;margin-inline:auto}
+  .hero__bg img{object-position:50% 45%}
 }
 
 /* ═══ ТРИПТИХ ════════════════════════════════════════════════ */
 .choice{
   display:grid;gap:var(--gap-panel);grid-template-columns:minmax(0,1fr);
-  grid-template-areas:"gallery" "cities" "stars";
+  grid-template-areas:"gallery" "cities" "vip";
   max-width:var(--maxw-page);margin-inline:auto;padding:var(--section-y) var(--pad-x);
 }
 /* min-width:0 обязателен: у грид-элемента по умолчанию min-width:auto,
    он не сжимается ниже ширины содержимого и вся колонка уезжает вправо */
 .choice > *{min-width:0}
-#gallery{grid-area:gallery} #cities{grid-area:cities} #stars{grid-area:stars}
+#gallery{grid-area:gallery} #cities{grid-area:cities} #vip{grid-area:vip}
 /* Десктоп: галерея занимает всю ширину сверху, под ней две колонки —
    звёздная слева, города справа. Прежний триптих из трёх колонок давал
    рваные низы: города кончались рано и справа зияла пустота, а звёздная
@@ -327,7 +365,7 @@ button,input,select{font:inherit;color:inherit}
     grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
     grid-template-areas:
       "gallery gallery"
-      "stars   cities";
+      "vip     cities";
     align-items:start;
     row-gap:var(--section-y);
   }
@@ -335,52 +373,57 @@ button,input,select{font:inherit;color:inherit}
   #cities{position:sticky;top:calc(var(--tap) + var(--s-6));align-self:start}
 }
 
-/* ── Галерея ───────────────────────────────────────────────── */
-.mosaic{
-  display:grid;gap:var(--gap-tile);grid-auto-flow:dense;
-  grid-template-columns:repeat(2,minmax(0,1fr));margin-top:var(--s-6);
+/* ── Каталог ───────────────────────────────────────────────────
+   Без «карточки-коробки»: фото, имя, цена, тонкая линия. Обводка
+   и заливка вокруг каждой позиции превратили бы витрину в типовую
+   сетку плиток, а тут работать должны сами букеты. */
+.cards{
+  display:grid;gap:var(--s-5) var(--gap-tile);margin-top:var(--s-6);
+  grid-template-columns:repeat(2,minmax(0,1fr));
 }
-.tile{
-  position:relative;overflow:hidden;border-radius:var(--r-hair);
-  box-shadow:var(--sh-plate);background:var(--surface-sunken);
-  background-size:cover;background-position:center;
+@media (min-width:900px){ .cards{grid-template-columns:repeat(4,minmax(0,1fr))} }
+
+.card{
+  display:flex;flex-direction:column;gap:var(--s-3);
+  text-decoration:none;color:var(--text);min-width:0;
 }
-.tile img{width:100%;height:100%;object-fit:cover;object-position:50% 42%}
-/* бордовый подвал: склеивает разнобойные кадры в один сет */
-.tile::after{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,rgba(113,19,57,0) 44%,rgba(113,19,57,.55) 100%);
+.card__img{
+  display:block;position:relative;overflow:hidden;aspect-ratio:1/1;
+  border-radius:var(--r-hair);background:var(--surface-sunken) center/cover;
+  box-shadow:var(--sh-plate);
 }
-.tile--hero{grid-column:span 2;aspect-ratio:4/5;border-radius:var(--arch)}
-.tile--wide{grid-column:span 2;aspect-ratio:4/5;border-radius:var(--arch)}
-.tile--sq{aspect-ratio:1/1}
-.tile__cap{
-  position:absolute;left:var(--s-3);right:var(--s-3);bottom:var(--s-3);
-  color:var(--peach-200);font-size:var(--fs-micro);z-index:1;
-  text-shadow:0 1px 6px rgba(64,0,26,.5);
+.card__img img{width:100%;height:100%;object-fit:cover;display:block;
+               transition:transform var(--dur-5) var(--ease-out)}
+.card__name{
+  font-family:var(--ff-display);font-weight:var(--fw-bold);
+  font-size:var(--fs-body);line-height:1.25;color:var(--text-head);
+  letter-spacing:var(--ls-display);text-wrap:pretty;
 }
-/* бордовая плашка вместо фото — не даёт растянуть 420px источник */
-.plate{
-  grid-column:span 2;aspect-ratio:16/10;background:var(--rose-500);
-  color:var(--peach-500);display:grid;place-items:center;text-align:center;
-  padding:var(--s-6);border-radius:var(--arch);position:relative;overflow:hidden;
+.card__foot{
+  margin-top:auto;padding-top:var(--s-3);border-top:1px solid var(--hairline);
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:2px var(--s-2);flex-wrap:wrap;   /* на узкой карточке «Заказать» уходит вниз, а не жмёт цену */
 }
-.plate p{font-family:var(--ff-display);font-size:var(--fs-h4);line-height:var(--lh-h4);
-         letter-spacing:var(--ls-display);max-width:18ch}
-/* Галерея на десктопе во всю ширину, 4 колонки. Раскладка задана явно,
-   иначе dense-поток с разными пропорциями оставляет дыры:
-     ряд 1-2  [ g-01 крупный 2x2 ][ 04 ][ g-03 ]
-                                  [ 11 ][ 10  ]
-     ряд 3    [ плашка 2x1       ][ g-07 2x1  ]
-   Ключ: у крупной плитки 2 колонки И 2 ряда — тогда aspect-ratio 1/1
-   даёт ровно ту же высоту, что два обычных квадрата с гэпом. */
-@media (min-width:1024px){
-  .mosaic{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .mosaic > *{aspect-ratio:1/1}
-  .tile--hero{grid-column:span 2;grid-row:span 2;aspect-ratio:1/1}
-  .tile--wide,.plate{grid-column:span 2;grid-row:span 1;aspect-ratio:2/1}
-  .plate p{font-size:var(--fs-h4);max-width:16ch}
+.card__price{font-size:var(--fs-lead);font-weight:var(--fw-med);color:var(--text)}
+.card__go{font-size:var(--fs-micro);color:var(--accent);white-space:nowrap}
+.card:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+.card:active .card__img img{transform:scale(1.02)}
+@media (hover:hover){
+  .card:hover .card__img img{transform:scale(1.04)}
+  .card:hover .card__go{text-decoration:underline;text-underline-offset:3px}
 }
+/* Цена — обещание, поэтому рядом всегда стоит оговорка. */
+.cards-note{margin-top:var(--s-5);font-size:var(--fs-micro);color:var(--text-muted);
+            display:flex;gap:var(--s-2);align-items:flex-start;max-width:62ch}
+.cards-note .mark{width:16px;height:16px;flex:none;margin-top:3px}
+
+/* ── Страница каталога ─────────────────────────────────────────
+   Hero тут нет, поэтому фиксированная панель должна получить
+   собственный отступ — иначе она накрывает заголовок. */
+.cat-main{padding-top:calc(var(--tap) + var(--s-5) + env(safe-area-inset-top))}
+.cat-head{padding-bottom:var(--s-7)}
+/* Кегль главной обложки на служебной странице избыточен */
+.h1--cat{font-size:var(--fs-h2);max-width:16ch;margin-top:var(--s-3)}
 
 /* ── Панель (города / доверие) ─────────────────────────────── */
 .panel{
@@ -401,6 +444,10 @@ button,input,select{font:inherit;color:inherit}
 }
 /* кнопка-триггер шита должна выглядеть как select, а не как кнопка */
 button.ctl{text-align:left;display:flex;align-items:center}
+/* .sr-only объявлен выше .ctl, специфичность у них одинаковая — и
+   width:100% из .ctl побеждал. Спрятанный нативный select оставался
+   во всю ширину, торчал за правый край и растягивал страницу на 11px. */
+select.ctl.sr-only{width:1px;min-height:0;height:1px;padding:0}
 .ctl:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
 @media (hover:hover){ .ctl:hover{box-shadow:inset 0 0 0 1px var(--accent)} }
 .note{margin-top:var(--s-3);font-size:var(--fs-micro);color:var(--text-muted);
@@ -416,21 +463,15 @@ button.ctl{text-align:left;display:flex;align-items:center}
   padding-block:14px;margin-block:-14px;
 }
 
-/* ── Звёздная доставка ─────────────────────────────────────── */
-.stars{
-  background:var(--bg);color:var(--text);padding:var(--s-7) var(--s-6);
+/* ── VIP-доставка ──────────────────────────────────────────────
+   Сплошное бордовое поле без фотографии: услуги ещё нет, и любой
+   кадр в ней обещал бы конкретного человека. Цвет бренда сам делает
+   блок заметным — это единственная залитая панель на странице. */
+.vip{
+  background:var(--rose-500);color:var(--text);padding:var(--s-7) var(--s-6);
   position:relative;overflow:hidden;border-radius:var(--r-panel);isolation:isolate;
 }
-/* Кинематографичный фон секции. Кадр силуэтный, без узнаваемого лица —
-   лицензия Pexels запрещает подавать человека так, будто он и есть та
-   «знаменитость», которая привезёт букет. */
-.stars__bg{position:absolute;inset:0;z-index:0}
-.stars__bg img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
-.stars__veil{
-  position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(180deg,rgba(64,0,26,.90) 0%,rgba(85,12,42,.94) 45%,rgba(113,19,57,.97) 100%);
-}
-.stars > :not(.stars__bg):not(.stars__veil){position:relative;z-index:2}
+.vip > :not(.cross):not(.watermark){position:relative;z-index:2}
 .chip{
   display:inline-flex;align-items:center;gap:var(--s-2);height:28px;
   padding-inline:var(--s-3);border-radius:var(--r-pill);
@@ -448,53 +489,6 @@ button.ctl{text-align:left;display:flex;align-items:center}
          color:var(--text-head);letter-spacing:var(--ls-caps);padding-top:3px}
 .step b{display:block;color:var(--text-head);font-weight:var(--fw-med)}
 .step span{font-size:var(--fs-micro);color:var(--text-muted)}
-
-.rail{
-  display:flex;gap:var(--s-3);overflow-x:auto;scroll-snap-type:x mandatory;
-  overscroll-behavior-x:contain;scrollbar-width:none;
-  margin:var(--s-6) calc(var(--s-6) * -1) 0;padding:0 var(--s-6);
-}
-.rail::-webkit-scrollbar{display:none}
-.acard{
-  flex:0 0 148px;scroll-snap-align:start;background:var(--surface);
-  border:0;border-radius:var(--r-panel);padding:0;cursor:pointer;text-align:left;
-  box-shadow:inset 0 0 0 1px var(--border);
-  display:grid;grid-template-rows:1fr auto;
-  transition:box-shadow var(--dur-2) var(--ease-out),transform var(--dur-1) var(--ease-out);
-}
-.acard__arch{
-  height:150px;border-radius:74px 74px var(--r-hair) var(--r-hair);
-  background:linear-gradient(180deg,var(--rose-200),var(--rose-400));
-  background-size:100% 180%;background-position:0 0;
-  display:grid;place-items:center;
-  transition:background-position var(--dur-3) var(--ease-out);
-}
-.acard__arch .mark{width:44px;height:44px;color:rgba(249,206,174,.42)}
-/* карточка с фото: тот же силуэт арки, кадр под маской */
-.acard__arch--photo{padding:0;overflow:hidden;background:var(--rose-500)}
-.acard__arch--photo picture,.acard__arch--photo img{width:100%;height:100%;display:block}
-.acard__arch--photo img{object-fit:cover;object-position:50% 22%}
-.acard__note{
-  margin-top:var(--s-3);font-size:var(--fs-micro);color:var(--text-muted);
-  display:flex;align-items:flex-start;gap:var(--s-2);
-}
-.acard__note .mark{width:16px;height:16px;flex:none;margin-top:2px}
-/* подсказка, что рельсу можно листать */
-.rail{scroll-padding-inline:var(--s-6)}
-.rail::after{content:"";flex:0 0 var(--s-4)}
-.acard__meta{padding:var(--s-3)}
-.acard__meta b{display:block;font-size:var(--fs-micro);font-weight:var(--fw-med);
-               color:var(--text-head)}
-/* статичные полосы, БЕЗ shimmer: шиммер значит «грузится», а тут ещё не написано */
-.acard__line{height:8px;border-radius:var(--r-pill);
-             background:rgba(249,206,174,.30);margin-top:var(--s-2)}
-.acard__line--short{width:46%}
-.acard:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
-.acard:active{transform:scale(.985)}
-@media (hover:hover){
-  .acard:hover{box-shadow:inset 0 0 0 1px rgba(249,206,174,.34)}
-  .acard:hover .acard__arch{background-position:0 100%}
-}
 
 .waitlist{margin-top:var(--s-6);padding-top:var(--s-5);border-top:1px solid var(--divider)}
 .waitlist__row{display:flex;flex-direction:column;gap:var(--s-3)}
