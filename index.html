@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Remy Boutique Floral — премиальные букеты и доставка, Алматы</title>
-<meta name="description" content="Букеты из свежей поставки каждый день. Каталог с ценами, доставка по Алматы с 10:00 до 24:00 без выходных. пр. Абая, 118 блок 2. Заказ в WhatsApp: +7 705 666 61 63.">
+<title>Remy Boutique Floral — букеты и доставка, Алматы</title>
+<meta name="description" content="Цветочный бутик Remy в Алматы: каталог букетов с ценами, доставка 10:00–24:00 без выходных. пр. Абая, 118 блок 2. Заказ в WhatsApp: +7 705 666 61 63.">
 <meta name="theme-color" content="#711339">
 <link rel="canonical" href="https://a1exxx.github.io/remy-floral/">
 
@@ -13,7 +13,7 @@
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://a1exxx.github.io/remy-floral/">
 <meta property="og:title" content="Remy — история бесконечной любви">
-<meta property="og:description" content="Каталог букетов с ценами и доставка по Алматы. Заказ в WhatsApp — покажем, что есть сегодня.">
+<meta property="og:description" content="Каталог букетов с ценами и доставка по Алматы. Заказ в WhatsApp.">
 <meta property="og:image" content="https://a1exxx.github.io/remy-floral/assets/og-remy-v1.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,365 +24,91 @@
 <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
 <link rel="manifest" href="assets/favicon/site.webmanifest">
 
-<!-- LCP — фон hero, поэтому грузим его первым; следом шрифт заголовка -->
+<!-- LCP — роза с обложки брендбука, поэтому грузим её первой -->
 <link rel="preload" as="image" href="assets/brand/rose.avif" type="image/avif" fetchpriority="high">
 <link rel="preload" as="font" type="font/woff2" crossorigin
-      href="assets/fonts/ptserif-700-cyrillic.woff2">
+      href="assets/fonts/site-ptserif-700.woff2">
 <link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/styles.css">
 
 <script>
-  /* до первой отрисовки: иначе reveal мигнёт при reduced-motion */
   document.documentElement.classList.add('js');
   if (matchMedia('(prefers-reduced-motion: reduce)').matches)
     document.documentElement.classList.add('rm');
 </script>
 </head>
-<body>
+<body class="body--cover">
 
-<a class="skip" href="#main">К основному содержанию</a>
+<a class="skip" href="#actions">К действиям</a>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <symbol id="mark" viewBox="0 0 24 24">
-    <path fill="currentColor" d="M12 1.6c1.05 1.6 1.5 3.35 1.32 5.06-.1.93-.4 1.83-.86 2.7l-.46.84-.46-.84c-.46-.87-.76-1.77-.86-2.7C10.5 4.95 10.95 3.2 12 1.6Z"/>
-    <path fill="currentColor" d="M11.3 9.9c-1.1-1.02-2.3-1.7-3.55-1.92-1.42-.25-2.72.13-3.35 1.05-.5.73-.36 1.62.3 2.04.7.45 1.63.2 2.03-.5.2-.36.16-.72-.06-.94-.2-.2-.5-.2-.66-.02l-.5-.5c.48-.5 1.3-.5 1.83.03.6.6.7 1.6.24 2.4-.24.44-.6.78-1.02.98 1.5.36 3.1.02 4.5-.94l.5-.35-.26-1.33Z"/>
-    <path fill="currentColor" d="M12.7 9.9c1.1-1.02 2.3-1.7 3.55-1.92 1.42-.25 2.72.13 3.35 1.05.5.73.36 1.62-.3 2.04-.7.45-1.63.2-2.03-.5-.2-.36-.16-.72.06-.94.2-.2.5-.2.66-.02l.5-.5c-.48-.5-1.3-.5-1.83.03-.6.6-.7 1.6-.24 2.4.24.44.6.78 1.02.98-1.5.36-3.1.02-4.5-.94l-.5-.35.26-1.33Z"/>
-    <path fill="currentColor" d="M11.35 12.2h1.3l.62 10.2h-2.54l.62-10.2Z"/>
-  </symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
-  <symbol id="i-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
     <path d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/>
   </symbol>
-  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
-    <path d="M6.4 3.5h3l1.6 4-2 1.3a11.5 11.5 0 0 0 5.2 5.2l1.3-2 4 1.6v3a1.9 1.9 0 0 1-2.1 1.9C10.6 19.9 4.1 13.4 3.5 5.6A1.9 1.9 0 0 1 5.4 3.5Z"/>
-  </symbol>
-  <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="m12 2.6 2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.44 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95L12 2.6Z"/></symbol>
-  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.86 9.86 0 0 0 4.74 1.2h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.13-2.9-7A9.82 9.82 0 0 0 12.04 2Zm0 18.06h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.1.81.83-3.03-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.23-8.23 2.2 0 4.26.86 5.82 2.41a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.13-1.47-.72-1.69-.8-.23-.09-.39-.13-.56.12-.16.25-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.09-.16.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.49-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04s.87 2.37 1 2.53c.12.17 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.23-.17-.48-.29Z"/></symbol>
   <symbol id="i-ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
     <rect x="3" y="3" width="18" height="18" rx="5.2"/>
     <circle cx="12" cy="12" r="4.1"/>
     <circle cx="17.2" cy="6.8" r="1.15" fill="currentColor" stroke="none"/>
   </symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></symbol>
 </svg>
 
-<header class="topbar" id="topbar">
-  <a class="topbar__logo" href="#main" aria-label="Remy Boutique Floral, наверх">
-    <img src="assets/logo-remy-peach.svg" alt="" width="470" height="256">
-  </a>
-  <nav class="topbar__nav" aria-label="Связаться">
-    <a class="topbtn" href="catalog.html">Каталог</a>
-    <a class="iconbtn" data-wa="question" href="#" aria-label="Написать в WhatsApp">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
+<!-- Логотипа в панели нет: он и так стоит по центру экрана крупно,
+     а два «Remy» на одном экране читаются как ошибка вёрстки. -->
+<header class="topbar topbar--cover topbar--right on-rose">
+  <nav class="topbar__nav" aria-label="Язык и ссылки">
+    <details class="lang" id="lang">
+      <summary class="lang__btn">
+        <span class="sr-only" data-i18n="langLabel">Язык сайта</span>
+        <span class="lang__cur" id="langCur">Рус</span>
+        <svg class="lang__chev" aria-hidden="true"><use href="#i-chev"/></svg>
+      </summary>
+      <ul class="lang__menu" id="langMenu">
+        <li><button type="button" data-lang="ru" lang="ru">Рус</button></li>
+        <li><button type="button" data-lang="en" lang="en">Eng</button></li>
+        <li><button type="button" data-lang="kk" lang="kk">Қаз</button></li>
+      </ul>
+    </details>
+
+    <a class="iconbtn" href="https://2gis.kz/almaty/firm/70000001115419179" target="_blank" rel="noopener"
+       aria-label="Мы на карте 2ГИС, откроется в новой вкладке">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pin"/></svg>
     </a>
     <a class="iconbtn" href="https://www.instagram.com/remy_floral/" target="_blank" rel="noopener"
        aria-label="Instagram Remy, откроется в новой вкладке">
       <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ig"/></svg>
     </a>
-    <a class="iconbtn" href="https://2gis.kz/almaty/firm/70000001115419179" target="_blank" rel="noopener"
-       aria-label="Мы на карте 2ГИС, откроется в новой вкладке">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pin"/></svg>
-    </a>
-    <a class="iconbtn iconbtn--call" href="tel:+77056666163" data-goal="call_click" aria-label="Позвонить">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-phone"/></svg>
-    </a>
   </nav>
 </header>
 
-<main id="main">
-
-<!-- ══════════ HERO ══════════ -->
-<section class="hero on-rose" aria-labelledby="hero-h">
-  <picture class="hero__bg">
+<main class="cover on-rose" id="main">
+  <picture class="cover__bg">
     <source srcset="assets/brand/rose.avif" type="image/avif">
-    <img src="assets/brand/rose.webp" alt="" width="3200" height="1014" fetchpriority="high" decoding="sync">
+    <img src="assets/brand/rose.webp" alt="" width="2400" height="1350"
+         fetchpriority="high" decoding="sync">
   </picture>
-  <div class="hero__veil" aria-hidden="true"></div>
+  <div class="cover__veil" aria-hidden="true"></div>
 
-  <div class="wrap hero__inner">
-    <div class="hero__mid">
-      <img class="hero__mark" src="assets/logo-remy-peach.svg" alt="Remy" width="470" height="256">
-      <h1 class="h1 hero__h1" id="hero-h">История бесконечной любви</h1>
-      <span class="eyebrow hero__eyebrow">Алматы · бутик цветов</span>
-    </div>
+  <div class="cover__inner">
+    <img class="cover__mark" src="assets/logo-remy-cream.svg" alt="Remy" width="470" height="256">
+    <h1 class="cover__title" data-i18n="tagline">История бесконечной любви</h1>
+    <p class="cover__city" data-i18n="city">Алматы</p>
   </div>
 
-  <div class="hero__cta">
-    <svg class="hero__arc" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-      <path fill="#FFFBF3" d="M0 120C400 0 1040 0 1440 120Z"/>
-    </svg>
-    <div class="wrap">
-      <div class="btn-row btn-row--hero">
-        <a class="btn btn--primary" href="catalog.html">Каталог с ценами</a>
-        <a class="btn btn--primary" data-wa="order" href="#">
-          <svg class="ic"><use href="#i-wa"/></svg>Заказать в WhatsApp
-        </a>
-        <a class="btn btn--ghost" href="#vip">VIP-доставка цветов →</a>
-      </div>
-      <p class="micro hero__meta">
-        <a href="https://2gis.kz/almaty/firm/70000001115419179" target="_blank" rel="noopener">5.0 в 2ГИС</a>
-        · пр.&nbsp;Абая, 118 блок 2 · 10:00—24:00, без выходных
-      </p>
+  <nav class="cover__actions" id="actions" aria-label="Что сделать">
+    <a class="abtn abtn--solid" href="catalog.html" data-i18n="btnCatalog">Каталог</a>
+    <a class="abtn abtn--solid" data-wa="order" href="#" data-i18n="btnWa">Заказать в WhatsApp</a>
+    <a class="abtn" href="vip.html" data-i18n="btnVip">VIP-доставка</a>
+    <div class="cover__row">
+      <a class="abtn abtn--sm" href="https://2gis.kz/almaty/firm/70000001115419179"
+         target="_blank" rel="noopener" data-i18n="btnAddr">Абая, 118 · 2ГИС</a>
+      <a class="abtn abtn--sm" href="tel:+77056666163" data-goal="call_click">+7 705 666 61 63</a>
     </div>
-  </div>
-</section>
-
-<div id="hero-sentinel" aria-hidden="true"></div>
-
-<!-- ══════════ ТРИПТИХ ══════════ -->
-<div class="choice">
-
-  <!-- ── Каталог (по центру) ── -->
-  <section id="gallery" aria-labelledby="gallery-h" class="reveal">
-    <span class="eyebrow">Готовые букеты</span>
-    <h2 class="h2" id="gallery-h" style="margin-top:var(--s-2)">Собраны и стоят в бутике</h2>
-    <p class="lead" style="margin-top:var(--s-4)">Наличие меняется каждое утро. Выберите — флорист подтвердит, что букет на месте, и соберёт такой же, если разобрали.</p>
-
-    <div class="cards" id="cards"></div>
-    <p class="cards-note">
-      <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
-      <span>Цены — с наших публикаций. Итоговую стоимость и состав флорист подтверждает в переписке до оплаты.</span>
-    </p>
-
-    <div class="btn-row">
-      <a class="btn btn--primary" href="catalog.html">Весь каталог с ценами →</a>
-      <a class="btn btn--ghost" data-wa="today" href="#">Что есть сегодня</a>
-    </div>
-  </section>
-
-  <!-- ── Города (справа на десктопе) ── -->
-  <section id="cities" aria-labelledby="cities-h" class="reveal">
-    <div class="panel">
-      <span class="eyebrow"><svg class="mark"><use href="#mark"/></svg>Обычная доставка</span>
-      <h2 class="h2" id="cities-h" style="margin-top:var(--s-2)">Куда привезти</h2>
-      <p class="body" style="margin-top:var(--s-4)">По Алматы привозим сами, без выходных. В другие города Казахстана — по согласованию, до любой оплаты.</p>
-
-      <div style="margin-top:var(--s-5)">
-        <label class="lbl" for="city">Город доставки</label>
-        <!-- нативный select — источник истины состояния; JS только рисует шит поверх -->
-        <select id="city" class="ctl" autocomplete="address-level2"></select>
-        <button type="button" id="cityTrigger" class="ctl" hidden
-                aria-haspopup="dialog" aria-expanded="false"></button>
-        <p class="note" id="cityNote">
-          <svg class="mark"><use href="#mark"/></svg>
-          <span>Выберите город — скажем, как быстро сможем привезти.</span>
-        </p>
-      </div>
-
-      <div class="btn-row">
-        <a class="btn btn--primary" id="orderBtn" data-wa="order" role="button" aria-disabled="true" href="#">Сначала выберите город</a>
-      </div>
-      <p class="micro" style="margin-top:var(--s-3)">Откроется WhatsApp с готовым сообщением. Отправляете его вы — ничего не улетит без вашего нажатия.</p>
-
-      <p class="alt-links">Не пользуетесь WhatsApp?
-        <a class="tappable" href="tel:+77056666163" data-goal="call_click">Позвонить</a> ·
-        <a class="tappable" href="https://www.instagram.com/remy_floral/" target="_blank" rel="noopener">Instagram</a>
-      </p>
-      <p class="micro" id="waReturn" hidden role="status" style="margin-top:var(--s-3)">
-        Мы на связи. Если чат так и не открылся — позвоните: <a href="tel:+77056666163">+7 705 666 61 63</a>.
-      </p>
-    </div>
-  </section>
-
-  <!-- ── VIP-доставка (слева на десктопе) ── -->
-  <section id="vip" aria-labelledby="vip-h" class="reveal">
-    <div class="vip on-rose">
-      <div class="cross" aria-hidden="true">
-        <svg viewBox="0 0 600 600" preserveAspectRatio="none">
-          <path d="M-60 520C120 300 380 180 660 150"/>
-          <path d="M-60 180C160 380 400 470 660 500"/>
-        </svg>
-      </div>
-      <svg class="watermark" aria-hidden="true"><use href="#mark"/></svg>
-
-      <span class="chip"><span class="chip__dot"></span>Новый проект · готовим к запуску</span>
-      <span class="eyebrow" style="display:block;margin-top:var(--s-4)">Впервые в Казахстане</span>
-      <h2 class="h2" id="vip-h" style="margin-top:var(--s-2)">VIP-доставка цветов</h2>
-      <p class="lead" style="margin-top:var(--s-3)">Букет привозит знаменитость — лично, к двери, в нужную минуту.</p>
-
-      <div class="body" style="margin-top:var(--s-5);display:grid;gap:var(--s-4)">
-        <p>В дверь звонит не курьер, а человек, которого она видела на экране. С вашим букетом и вашими словами. Тридцать секунд, которые снимут на все телефоны в квартире.</p>
-      </div>
-
-      <ul class="steps">
-        <li class="step"><span class="step__n">01</span><span><b>Букет и повод</b><span>Флорист собирает букет под сцену, а не наоборот.</span></span></li>
-        <li class="step"><span class="step__n">02</span><span><b>Артист</b><span>Покажем, кто свободен на вашу дату. Условия и цена — до оплаты.</span></span></li>
-        <li class="step"><span class="step__n">03</span><span><b>Вручение</b><span>Время, слова, песня — согласуем заранее. У вас останется видео.</span></span></li>
-      </ul>
-
-      <p class="body" style="margin-top:var(--s-6)">Сейчас собираем состав артистов. Оставьте заявку — назовём имена, даты и цены первыми. Предоплаты нет: сначала присылаем варианты, решаете вы.</p>
-
-      <div class="btn-row">
-        <a class="btn btn--primary" id="vipBtn" data-wa="vip" href="#">Хочу VIP-доставку</a>
-      </div>
-
-      <form class="waitlist" id="waitlist" method="post" novalidate>
-        <label class="lbl" for="wl">Не пользуетесь WhatsApp? Оставьте номер</label>
-        <div class="waitlist__row">
-          <input class="field" id="wl" name="contact" type="tel" inputmode="tel"
-                 autocomplete="tel" placeholder="+7 ___ ___ __ __ или @ник"
-                 aria-describedby="wlNote">
-          <button class="btn btn--ghost" type="submit">В список первых</button>
-        </div>
-        <p class="micro" id="wlNote" style="margin-top:var(--s-3)" role="status">Напишем, как только будут имена и цены. Без звонков и рассылок.</p>
-      </form>
-    </div>
-  </section>
-</div>
-
-<!-- ══════════ ФИРМЕННЫЙ СТИЛЬ И СЕРТИФИКАТ ══════════ -->
-<section class="section brandwrap" aria-labelledby="pack-h">
-  <div class="wrap reveal">
-    <span class="eyebrow"><svg class="mark"><use href="#mark"/></svg>Фирменная упаковка</span>
-    <h2 class="h2" id="pack-h">Букет приезжает как подарок</h2>
-    <p class="lead" style="margin-top:var(--s-4)">Конус, шляпная коробка, лента и тишью — всё в фирменных цветах. Разворачивать так же приятно, как получать.</p>
-
-    <div class="packs" id="packs"></div>
-
-    <div class="cert">
-      <picture class="cert__img">
-        <source srcset="assets/brand/cert.avif" type="image/avif">
-        <img src="assets/brand/cert.webp" alt="Фирменный конверт Remy и подарочный сертификат"
-             width="1100" height="547" loading="lazy" decoding="async">
-      </picture>
-      <div class="cert__body">
-        <span class="eyebrow"><svg class="mark"><use href="#mark"/></svg>Подарочный сертификат</span>
-        <h3 class="h3" style="margin-top:var(--s-2)">Когда не знаете, какие цветы она любит</h3>
-        <p class="body" style="margin-top:var(--s-3)">Сертификат в фирменном конверте. Номинал обсудим — получатель сам выберет букет и день, когда его привезут.</p>
-        <div class="btn-row">
-          <a class="btn btn--primary" data-wa="cert" href="#">Заказать сертификат</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ ДОВЕРИЕ ══════════ -->
-<section class="section" aria-labelledby="trust-h">
-  <div class="wrap reveal">
-    <span class="eyebrow"><svg class="mark"><use href="#mark"/></svg>Почему нам верят</span>
-    <h2 class="h2" id="trust-h" style="margin-top:var(--s-2)">Качество в деталях</h2>
-
-    <div class="reviews">
-      <a class="rev rev--score" href="https://2gis.kz/almaty/firm/70000001115419179"
-         target="_blank" rel="noopener"
-         aria-label="Рейтинг 5,0 в 2ГИС по 24 отзывам, откроется в новой вкладке">
-        <span class="gis"><span class="gis__logo">2ГИС</span></span>
-        <b class="rev__num">5,0</b>
-        <span class="stars5" aria-hidden="true">
-          <svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg>
-        </span>
-        <span class="rev__sub">24 отзыва · 39 оценок</span>
-        <span class="rev__link">Читать в 2ГИС →</span>
-      </a>
-
-      <blockquote class="rev">
-        <span class="stars5" aria-hidden="true">
-          <svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg>
-        </span>
-        <p>Срочный свадебный букет собрали меньше чем за сутки</p>
-        <cite><span class="gis__logo gis__logo--sm">2ГИС</span> отзыв клиента</cite>
-      </blockquote>
-
-      <blockquote class="rev">
-        <span class="stars5" aria-hidden="true">
-          <svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg>
-        </span>
-        <p>…Сразу видно, всё сделано со вкусом</p>
-        <cite><span class="gis__logo gis__logo--sm">2ГИС</span> отзыв клиента</cite>
-      </blockquote>
-    </div>
-
-    <p class="facts-line">
-      <a href="https://www.instagram.com/remy_floral/" target="_blank" rel="noopener">76&nbsp;000 подписчиков в Instagram</a>
-      <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
-      <span>свежая поставка каждый день</span>
-      <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
-      <span>10:00 — 24:00, без выходных</span>
-    </p>
-  </div>
-</section>
-
-<!-- ══════════ КОНТАКТЫ ══════════ -->
-<section class="section on-rose" id="contact" aria-labelledby="contact-h"
-         style="padding-bottom:calc(var(--section-y) + 84px);overflow:hidden">
-  <svg class="arc arc--top" viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-    <path fill="#FFFBF3" d="M0 0v56C240 20 560 6 840 26c220 15 420 44 600 62V0Z"/>
-  </svg>
-  <div class="cross" aria-hidden="true">
-    <svg viewBox="0 0 600 600" preserveAspectRatio="none">
-      <path d="M-60 480C140 280 380 160 660 130"/>
-      <path d="M-60 140C160 360 400 450 660 480"/>
-    </svg>
-  </div>
-
-  <div class="wrap reveal" style="position:relative;z-index:2">
-    <h2 class="h2 h2--wide" id="contact-h">Remy — когда любовь не знает границ</h2>
-
-    <div class="channels">
-      <a class="channel" href="https://wa.me/77056666163" data-wa="question" data-goal="wa_contact">
-        <svg class="channel__ic"><use href="#i-wa"/></svg>
-        <span><b>WhatsApp</b><span>написать и собрать букет</span></span>
-      </a>
-      <a class="channel" href="https://www.instagram.com/remy_floral/" target="_blank" rel="noopener"
-         aria-label="Instagram Remy, откроется в новой вкладке">
-        <svg class="channel__ic"><use href="#i-ig"/></svg>
-        <span><b>Instagram</b><span>@remy_floral — свежая поставка каждый день</span></span>
-      </a>
-    </div>
-
-    <div class="foot">
-      <div>
-        <h3>Адрес</h3>
-        <p>пр. Абая, 118 блок 2, Алматы</p>
-        <p style="margin-top:var(--s-2)">
-          <a class="tappable" href="https://2gis.kz/almaty/firm/70000001115419179" target="_blank" rel="noopener">Открыть в 2ГИС →</a>
-        </p>
-      </div>
-      <div>
-        <h3>Часы</h3>
-        <p>10:00 — 24:00, без выходных</p>
-        <p class="micro" style="margin-top:var(--s-2)">Оплата: наличными или по QR</p>
-      </div>
-      <div>
-        <h3>Связь</h3>
-        <p><a class="tappable" href="tel:+77056666163" data-goal="call_click">+7 705 666 61 63</a></p>
-        <p class="micro" style="margin-top:var(--s-2)">Цветы · Кондитерские изделия · Товары для праздников · Подарочная упаковка</p>
-      </div>
-    </div>
-
-    <div class="foot__legal">
-      <p class="micro">Сайт не является публичной офертой. Состав букета, наличие и цену уточняйте у флориста.</p>
-      <p class="micro" style="margin-top:var(--s-2)">© 2026 Remy Boutique Floral · ESTD. 2026</p>
-    </div>
-  </div>
-</section>
-
+    <p class="cover__hours" data-i18n="hours">10:00 — 24:00, без выходных</p>
+  </nav>
 </main>
 
 <div class="grain" aria-hidden="true"></div>
-
-<div class="cta-bar" id="ctaBar">
-  <span class="cta-bar__ctx" id="ctaCtx">Алматы · доставка сегодня</span>
-  <a class="btn btn--ghost" href="tel:+77056666163" data-goal="call_click" aria-label="Позвонить">Позвонить</a>
-  <a class="btn btn--primary" id="barWa" data-wa="order" href="#">WhatsApp</a>
-</div>
-
-<dialog class="sheet" id="citySheet" aria-labelledby="sheetTitle">
-  <div class="sheet__head">
-    <div class="sheet__grip" aria-hidden="true"></div>
-    <div class="sheet__title">
-      <h3 id="sheetTitle">Город доставки</h3>
-      <button type="button" class="sheet__close" id="sheetClose" aria-label="Закрыть">
-        <svg width="24" height="24"><use href="#i-close"/></svg>
-      </button>
-    </div>
-    <input type="search" class="sheet__search" id="citySearch" placeholder="Найти город"
-           aria-label="Найти город" autocomplete="off" enterkeyhint="search" aria-controls="cityList">
-    <p class="sr-only" aria-live="polite" id="cityCount"></p>
-  </div>
-  <div class="sheet__list" id="cityList" role="listbox" aria-labelledby="sheetTitle"></div>
-</dialog>
 
 <script type="application/ld+json">
 {
@@ -421,6 +147,7 @@
 }
 </script>
 
+<script src="js/i18n.js" defer></script>
 <script src="js/app.js" defer></script>
 </body>
 </html>
