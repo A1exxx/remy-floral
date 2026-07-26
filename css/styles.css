@@ -291,12 +291,14 @@ button,input,select{font:inherit;color:inherit}
 /* Фон hero: фото на всю площадь + бордовая вуаль. Вуаль обязательна —
    без неё белый текст по светлым лепесткам нечитаем, а бренд теряется. */
 .hero__bg{position:absolute;inset:0;z-index:0;display:block}
-.hero__bg img{width:100%;height:100%;object-fit:cover;object-position:50% 42%}
+.hero__bg img{width:100%;height:100%;object-fit:cover;object-position:50% 46%}
 .hero__veil{
   position:absolute;inset:0;z-index:1;pointer-events:none;
+  /* Вуаль ровно настолько, чтобы текст читался: роза сама тёмно-бордовая.
+     Раньше она была плотнее и превращала фото в плоскую заливку. */
   background:
-    linear-gradient(180deg,rgba(64,0,26,.86) 0%,rgba(85,12,42,.72) 42%,rgba(113,19,57,.62) 100%),
-    linear-gradient(90deg,rgba(64,0,26,.55) 0%,rgba(64,0,26,0) 62%);
+    linear-gradient(180deg,rgba(40,0,17,.30) 0%,rgba(52,4,22,.18) 40%,rgba(78,10,38,.42) 100%),
+    linear-gradient(90deg,rgba(40,0,17,.34) 0%,rgba(40,0,17,0) 70%);
 }
 .hero__inner{position:relative;z-index:var(--z-content)}
 .hero__h1,.hero .lead,.hero .eyebrow{text-shadow:0 1px 14px rgba(48,0,20,.45)}
@@ -509,6 +511,51 @@ button.ctl{text-align:left;display:flex;align-items:center}
 /* Доверие подано строкой, а не сеткой одинаковых карточек со статистикой:
    «большая цифра + мелкая подпись» ×4 — самый узнаваемый SaaS-штамп.
    Рейтинг работает якорем, остальное течёт текстом со знаком-разделителем. */
+/* ── Фирменные носители и сертификат ───────────────────────────
+   Мокапы из брендбука сняты на персиковом фоне, поэтому секция
+   идёт на молочном: персиковые плашки читаются как единый набор. */
+.brandwrap{background:var(--peach-200)}
+
+/* На мобиле — лента с горизонтальным скроллом: сеткой семь носителей
+   добавляли странице ~800px высоты, а листать их приятнее.
+   На десктопе разворачиваются в сетку. */
+.packs{
+  display:flex;gap:var(--gap-tile);margin-top:var(--s-6);
+  overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;
+  scrollbar-width:none;
+  margin-inline:calc(var(--pad-x) * -1);padding-inline:var(--pad-x);
+}
+.packs::-webkit-scrollbar{display:none}
+.packs::after{content:"";flex:0 0 var(--s-4)}
+.packs .pack{flex:0 0 clamp(180px,52vw,240px);scroll-snap-align:start}
+@media (min-width:860px){
+  .packs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+         overflow:visible;margin-inline:0;padding-inline:0}
+  .packs::after{display:none}
+  .packs .pack{flex:none}
+}
+.pack{
+  position:relative;overflow:hidden;border-radius:var(--r-hair);
+  background:var(--peach-300) center/cover;aspect-ratio:1/1;
+  box-shadow:inset 0 0 0 1px rgba(113,19,57,.10);
+}
+.pack img{width:100%;height:100%;object-fit:cover;display:block}
+/* конус вертикальный — на десктопе даём ему двойную высоту */
+@media (min-width:860px){ .packs .pack:first-child{grid-row:span 2;aspect-ratio:auto} }
+
+.cert{
+  margin-top:var(--s-7);display:grid;gap:var(--gap-panel);
+  grid-template-columns:minmax(0,1fr);align-items:center;
+  background:var(--surface);border-radius:var(--r-hair);
+  box-shadow:inset 0 0 0 1px var(--border);padding:var(--s-5);
+}
+@media (min-width:860px){
+  .cert{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);padding:var(--s-6)}
+}
+.cert__img{display:block;border-radius:var(--r-hair);overflow:hidden}
+.cert__img img{width:100%;height:auto;display:block}
+.cert__body .btn-row{margin-top:var(--s-5)}
+
 /* ── Отзывы 2ГИС ───────────────────────────────────────────────
    Зелёный здесь — единственный цвет вне палитры бренда, и это
    осознанно: это не декор, а знак стороннего источника. Узнаваемость

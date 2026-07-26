@@ -25,7 +25,7 @@
 <link rel="manifest" href="assets/favicon/site.webmanifest">
 
 <!-- LCP — фон hero, поэтому грузим его первым; следом шрифт заголовка -->
-<link rel="preload" as="image" href="assets/hero.avif" type="image/avif" fetchpriority="high">
+<link rel="preload" as="image" href="assets/brand/rose.avif" type="image/avif" fetchpriority="high">
 <link rel="preload" as="font" type="font/woff2" crossorigin
       href="assets/fonts/ptserif-700-cyrillic.woff2">
 <link rel="stylesheet" href="css/fonts.css">
@@ -93,8 +93,8 @@
 <!-- ══════════ HERO ══════════ -->
 <section class="hero on-rose" aria-labelledby="hero-h">
   <picture class="hero__bg">
-    <source srcset="assets/hero.avif" type="image/avif">
-    <img src="assets/hero.webp" alt="" width="1200" height="1600" fetchpriority="high" decoding="sync">
+    <source srcset="assets/brand/rose.avif" type="image/avif">
+    <img src="assets/brand/rose.webp" alt="" width="3200" height="1014" fetchpriority="high" decoding="sync">
   </picture>
   <div class="hero__veil" aria-hidden="true"></div>
 
@@ -235,6 +235,33 @@
     </div>
   </section>
 </div>
+
+<!-- ══════════ ФИРМЕННЫЙ СТИЛЬ И СЕРТИФИКАТ ══════════ -->
+<section class="section brandwrap" aria-labelledby="pack-h">
+  <div class="wrap reveal">
+    <span class="eyebrow"><svg class="mark"><use href="#mark"/></svg>Фирменная упаковка</span>
+    <h2 class="h2" id="pack-h">Букет приезжает как подарок</h2>
+    <p class="lead" style="margin-top:var(--s-4)">Конус, шляпная коробка, лента и тишью — всё в фирменных цветах. Разворачивать так же приятно, как получать.</p>
+
+    <div class="packs" id="packs"></div>
+
+    <div class="cert">
+      <picture class="cert__img">
+        <source srcset="assets/brand/cert.avif" type="image/avif">
+        <img src="assets/brand/cert.webp" alt="Фирменный конверт Remy и подарочный сертификат"
+             width="1100" height="547" loading="lazy" decoding="async">
+      </picture>
+      <div class="cert__body">
+        <span class="eyebrow"><svg class="mark"><use href="#mark"/></svg>Подарочный сертификат</span>
+        <h3 class="h3" style="margin-top:var(--s-2)">Когда не знаете, какие цветы она любит</h3>
+        <p class="body" style="margin-top:var(--s-3)">Сертификат в фирменном конверте. Номинал обсудим — получатель сам выберет букет и день, когда его привезут.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" data-wa="cert" href="#">Заказать сертификат</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ══════════ ДОВЕРИЕ ══════════ -->
 <section class="section" aria-labelledby="trust-h">

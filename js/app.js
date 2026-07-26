@@ -148,6 +148,10 @@
       return 'Здравствуйте, Remy! Покажите, какие букеты есть сегодня.\n' + head(c) +
              '\n\nИщу букет: ';
     },
+    cert: function (c) {
+      return 'Здравствуйте, Remy! Хочу подарочный сертификат.\n' + head(c) +
+             '\n\nНа какую сумму и когда нужен: ';
+    },
     question: function (c) {
       return 'Здравствуйте, Remy! Пишу с сайта.\n' + head(c) +
              '\n\nХочу спросить: ';
@@ -192,6 +196,31 @@
     /* eager/high тут НЕ ставим: плитка гарантированно за фолдом
        (hero занимает 100dvh) и конкурировала бы приоритетом
        с настоящим LCP — фоном hero. Дыру закрывает LQIP. */
+  }
+
+  /* ─── Фирменные носители из брендбука ─────────────────────── */
+  var PACKS = [
+    { id: 'cone',    alt: 'Букет из калл в фирменном бордовом конусе Remy' },
+    { id: 'hatbox',  alt: 'Шляпная коробка Remy с красными герберами и лилиями' },
+    { id: 'boxes',   alt: 'Фирменные тубусы Remy в бордовом и кремовом' },
+    { id: 'bags',    alt: 'Пакеты Remy бордовый и кремовый с фирменными дугами' },
+    { id: 'ribbon',  alt: 'Бордовая лента Remy с золотым логотипом' },
+    { id: 'tissue',  alt: 'Фирменная упаковочная бумага Remy с узором из дуг' },
+    { id: 'shopper', alt: 'Бордовый шоппер Remy с логотипом' }
+  ];
+
+  function buildPacks() {
+    var box = $('#packs');
+    if (!box) return;
+    box.innerHTML = PACKS.map(function (p) {
+      var base = 'assets/brand/' + p.id;
+      return '<figure class="pack" style="background-image:url(' + base + '-lqip.webp)">' +
+        '<picture>' +
+          '<source srcset="' + base + '.avif" type="image/avif">' +
+          '<img src="' + base + '.webp" alt="' + p.alt + '" loading="lazy" decoding="async">' +
+        '</picture>' +
+      '</figure>';
+    }).join('');
   }
 
   /* ─── Карточки артистов ───────────────────────────────────── */
@@ -505,6 +534,7 @@
     orderBtn = $('#orderBtn');
     ctaCtx = $('#ctaCtx');
     buildGallery();
+    buildPacks();
     buildArtists();
     buildSelect();
     buildSheet();
