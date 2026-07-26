@@ -25,7 +25,7 @@ window.I18N = {
     /* — каталог — */
     catTitle: 'Букеты и цены',
     catEyebrow: 'Каталог',
-    catLead: 'Собраны и стоят в бутике на Абая, 118. Нажмите на букет — откроется WhatsApp с его названием и ценой, останется написать дату.',
+    catLead: 'Собраны и стоят в бутике на Абая, 118. Листайте и выбирайте — нажатие сразу открывает WhatsApp.',
     catNote: 'Цены взяты с наших публикаций и могут меняться вместе с поставкой. Итоговую стоимость и состав флорист подтверждает в переписке до оплаты. Наличие меняется каждое утро — если букет разобрали, соберём такой же.',
     catAsk: 'Спросить, что есть сегодня',
     catIg: 'Смотреть в Instagram',
@@ -130,7 +130,7 @@ window.I18N = {
 
     catTitle: 'Bouquets and prices',
     catEyebrow: 'Catalogue',
-    catLead: 'Made up and waiting in the boutique at 118 Abay Ave. Tap a bouquet — WhatsApp opens with its name and price, you just add the date.',
+    catLead: 'Made up and waiting in the boutique at 118 Abay Ave. Swipe and pick — a tap opens WhatsApp right away.',
     catNote: 'Prices are taken from our own posts and move with each delivery. The florist confirms the final price and composition in chat, before any payment. Stock changes every morning — if a bouquet is gone, we will make the same one.',
     catAsk: 'Ask what we have today',
     catIg: 'See on Instagram',
@@ -223,7 +223,7 @@ window.I18N = {
 
     catTitle: 'Гүл шоқтары және бағалар',
     catEyebrow: 'Каталог',
-    catLead: 'Абай даңғылы, 118 бутигінде дайын тұр. Гүл шоғын басыңыз — WhatsApp оның атауы мен бағасымен ашылады, күнін жазсаңыз болды.',
+    catLead: 'Абай даңғылы, 118 бутигінде дайын тұр. Сырғытып таңдаңыз — басқан бойда WhatsApp ашылады.',
     catNote: 'Бағалар өз жарияланымдарымыздан алынған және жеткізілімге қарай өзгеруі мүмкін. Түпкі бағаны мен құрамын флорист төлемге дейін хат алмасуда растайды. Қолда бары күн сайын өзгереді — гүл шоғы сатылып кетсе, дәл сондайын жинап береміз.',
     catAsk: 'Бүгін не бар екенін сұрау',
     catIg: 'Instagram-да көру',

@@ -487,20 +487,28 @@ button,input,select{font:inherit;color:inherit}
   #cities{position:sticky;top:calc(var(--tap) + var(--s-6));align-self:start}
 }
 
-/* ── Каталог ───────────────────────────────────────────────────
-   Без «карточки-коробки»: фото, имя, цена, тонкая линия. Обводка
-   и заливка вокруг каждой позиции превратили бы витрину в типовую
-   сетку плиток, а тут работать должны сами букеты. */
+/* ── Каталог: карусель ─────────────────────────────────────────
+   Заказчик просил «просто крутить вправо-влево и выбирать».
+   Поэтому лента со снап-прокруткой, а в карточке только кадр
+   и цена — ни названия, ни подписи «заказать». */
 .cards{
-  display:grid;gap:var(--s-5) var(--gap-tile);margin-top:var(--s-6);
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  display:flex;gap:var(--gap-tile);margin-top:var(--s-6);
+  overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;
+  scrollbar-width:none;
+  /* лента упирается в края экрана, а не в поля страницы —
+     так видно, что справа есть продолжение */
+  margin-inline:calc(var(--pad-x) * -1);padding-inline:var(--pad-x);
+  scroll-padding-inline:var(--pad-x);
 }
-@media (min-width:900px){ .cards{grid-template-columns:repeat(4,minmax(0,1fr))} }
+.cards::-webkit-scrollbar{display:none}
+.cards::after{content:"";flex:0 0 var(--s-4)}
 
 .card{
+  flex:0 0 clamp(220px,68vw,320px);scroll-snap-align:start;
   display:flex;flex-direction:column;gap:var(--s-3);
   text-decoration:none;color:var(--text);min-width:0;
 }
+@media (min-width:900px){ .card{flex:0 0 300px} }
 .card__img{
   display:block;position:relative;overflow:hidden;aspect-ratio:1/1;
   border-radius:var(--r-hair);background:var(--surface-sunken) center/cover;
@@ -508,32 +516,32 @@ button,input,select{font:inherit;color:inherit}
 }
 .card__img img{width:100%;height:100%;object-fit:cover;display:block;
                transition:transform var(--dur-5) var(--ease-out)}
-.card__name{
-  /* Не заголовочным шрифтом: расширенный Black на 17px даёт по два
-     слова в строку и ломает сетку карточек. */
-  font-family:var(--ff-ui);font-weight:var(--fw-bold);
-  font-size:var(--fs-body);line-height:1.25;color:var(--text-head);
-  text-wrap:pretty;
+.card__price{
+  font-size:var(--fs-lead);font-weight:var(--fw-med);color:var(--text);
+  text-align:center;
 }
-.card__foot{
-  margin-top:auto;padding-top:var(--s-3);border-top:1px solid var(--hairline);
-  /* На узкой карточке — строго в столбик. При flex-wrap перенос случался
-     только у части карточек, и линии в соседних колонках вставали на
-     разной высоте. Фиксированная раскладка гарантирует выравнивание. */
-  display:flex;flex-direction:column;gap:2px;
-}
-@media (min-width:900px){
-  .card__foot{flex-direction:row;align-items:baseline;
-              justify-content:space-between;gap:var(--s-2)}
-}
-.card__price{font-size:var(--fs-lead);font-weight:var(--fw-med);color:var(--text)}
-.card__go{font-size:var(--fs-micro);color:var(--accent);white-space:nowrap}
 .card:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
 .card:active .card__img img{transform:scale(1.02)}
-@media (hover:hover){
-  .card:hover .card__img img{transform:scale(1.04)}
-  .card:hover .card__go{text-decoration:underline;text-underline-offset:3px}
+@media (hover:hover){ .card:hover .card__img img{transform:scale(1.04)} }
+
+/* Стрелки. Прячем там, где есть тач: на телефоне листают пальцем,
+   и кнопки только съедают место. */
+.rail-nav{display:none}
+@media (hover:hover) and (pointer:fine) and (min-width:900px){
+  .rail-nav{display:flex;gap:var(--s-2);margin-top:var(--s-5);justify-content:flex-end}
+  .rail-nav button{
+    width:48px;height:48px;display:grid;place-items:center;cursor:pointer;
+    background:transparent;border:0;border-radius:var(--r-pill);
+    color:var(--accent);box-shadow:inset 0 0 0 1px var(--border);
+    transition:background-color var(--dur-2) var(--ease-out);
+  }
+  .rail-nav button:hover{background:rgba(113,19,57,.08)}
+  .rail-nav button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+  .rail-nav svg{width:22px;height:22px}
+  .rail-nav .prev svg{transform:rotate(90deg)}
+  .rail-nav .next svg{transform:rotate(-90deg)}
 }
+
 /* Цена — обещание, поэтому рядом всегда стоит оговорка. */
 .cards-note{margin-top:var(--s-5);font-size:var(--fs-micro);color:var(--text-muted);
             display:flex;gap:var(--s-2);align-items:flex-start;max-width:62ch}

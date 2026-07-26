@@ -169,10 +169,13 @@
   function buildCards(box, limit) {
     if (!box) return;
     var items = limit ? CATALOG.slice(0, limit) : CATALOG;
+    /* Только фото и цена. Название убрано: заказчик решил, что
+       детали менеджер выясняет в переписке, а карусель должна
+       листаться, а не читаться. */
     box.innerHTML = items.map(function (b) {
       var base = 'assets/catalog/' + b.id;
       var name = b[lang] || b.ru;
-      return '<a class="card" href="#" data-item="' + name + ' — ' + money(b.price) + '" ' +
+      return '<a class="card" href="#" data-item="' + name + '" ' +
              'aria-label="' + name + ', ' + money(b.price) + '">' +
         '<span class="card__img" style="background-image:url(' + base + '-lqip.webp)">' +
           '<picture>' +
@@ -181,13 +184,25 @@
                  'loading="lazy" decoding="async">' +
           '</picture>' +
         '</span>' +
-        '<span class="card__name">' + name + '</span>' +
-        '<span class="card__foot">' +
-          '<b class="card__price">' + money(b.price) + '</b>' +
-          '<span class="card__go">' + t('order') + ' →</span>' +
-        '</span>' +
+        '<b class="card__price">' + money(b.price) + '</b>' +
       '</a>';
     }).join('');
+  }
+
+  /* Стрелки листания: на мышке свайпа нет, а полосу прокрутки
+     мы прячем. Листаем ровно на одну карточку. */
+  function wireRail() {
+    var rail = $('#catalog');
+    if (!rail) return;
+    all('[data-rail]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var card = rail.querySelector('.card');
+        if (!card) return;
+        var step = card.getBoundingClientRect().width + 14;
+        rail.scrollBy({ left: btn.getAttribute('data-rail') === 'next' ? step : -step,
+                        behavior: 'smooth' });
+      });
+    });
   }
 
   function buildPacks() {
@@ -516,6 +531,7 @@
     buildPacks();
     buildSelect();
     buildSheet();
+    wireRail();
     wireLang();
     applyLang(lang, false);
     wireLinks();

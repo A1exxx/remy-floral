@@ -88,13 +88,19 @@
   <div class="wrap">
     <span class="eyebrow"><svg class="mark"><use href="#mark"/></svg><span data-i18n="catEyebrow">Каталог</span></span>
     <h1 class="h1 h1--cat" id="cat-h" data-i18n="catTitle">Букеты и цены</h1>
-    <p class="lead" style="margin-top:var(--s-4)" data-i18n="catLead">Собраны и стоят в бутике на Абая, 118. Нажмите на букет — откроется WhatsApp с его названием и ценой, останется написать дату.</p>
+    <p class="lead" style="margin-top:var(--s-4)" data-i18n="catLead">Собраны и стоят в бутике на Абая, 118. Листайте и выбирайте — нажатие сразу открывает WhatsApp.</p>
   </div>
 </section>
 
 <section class="section" style="padding-top:0" aria-label="Список букетов">
   <div class="wrap">
     <div class="cards" id="catalog"></div>
+    <div class="rail-nav">
+      <button type="button" class="prev" data-rail="prev" aria-label="Предыдущие букеты" aria-controls="catalog">
+        <svg aria-hidden="true"><use href="#i-chev"/></svg></button>
+      <button type="button" class="next" data-rail="next" aria-label="Следующие букеты" aria-controls="catalog">
+        <svg aria-hidden="true"><use href="#i-chev"/></svg></button>
+    </div>
     <p class="cards-note">
       <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
       <span data-i18n="catNote">Цены взяты с наших публикаций и могут меняться вместе с поставкой. Итоговую стоимость и состав флорист подтверждает в переписке до оплаты. Наличие меняется каждое утро — если букет разобрали, соберём такой же.</span>
