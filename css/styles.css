@@ -350,8 +350,8 @@ button,input,select{font:inherit;color:inherit}
   display:flex;flex-direction:column;gap:var(--s-3);
   padding-top:clamp(20px,4vh,44px);
 }
-.cover__row{display:flex;gap:var(--s-3)}
-.cover__row .abtn{flex:1 1 0;min-width:0}
+/* Адрес — такая же полноширинная кнопка, как остальные три,
+   просто последняя в списке. */
 .cover__hours{
   margin:var(--s-2) 0 0;text-align:center;
   font-size:var(--fs-micro);color:var(--text-muted);
@@ -391,8 +391,8 @@ button,input,select{font:inherit;color:inherit}
                   grid-template-columns:repeat(3,auto);
                   justify-content:center;gap:var(--s-4);align-items:stretch}
   .cover__actions > .abtn{padding-inline:var(--s-7)}
-  .cover__row{grid-column:1 / -1;justify-content:center}
-  .cover__row .abtn{flex:0 1 320px}
+  /* Адрес идёт четвёртой строкой во всю ширину под тремя действиями */
+  .abtn--wide{grid-column:1 / -1;justify-self:center;min-width:min(100%,560px)}
   .cover__hours{grid-column:1 / -1}
 }
 
