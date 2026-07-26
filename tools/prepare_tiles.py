@@ -10,7 +10,7 @@
 import glob
 import os
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(os.path.dirname(HERE), "assets", "bouquets")
@@ -57,6 +57,11 @@ def main():
         # 506px — небольшой downscale незаметен, а апскейла по-прежнему нет.
         if sq.width > TILE_PX:
             sq = sq.resize((TILE_PX, TILE_PX), Image.LANCZOS)
+
+        # Исходники — стоп-кадры видео, они мягкие из-за межкадрового сжатия.
+        # Лёгкий unsharp по яркости заметно поднимает воспринимаемую резкость;
+        # порог 3 не даёт вытащить шум в тенях.
+        sq = sq.filter(ImageFilter.UnsharpMask(radius=1.4, percent=72, threshold=3))
 
         base = os.path.join(SRC, "tile-%s" % key)
         sq.save(base + ".avif", "AVIF", quality=58)

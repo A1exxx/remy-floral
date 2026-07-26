@@ -212,16 +212,53 @@ button,input,select{font:inherit;color:inherit}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
 }
 
+/* ═══ ВЕРХНЯЯ ПАНЕЛЬ ═════════════════════════════════════════ */
+.topbar{
+  position:fixed;inset:0 0 auto 0;z-index:var(--z-sticky);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s-3);
+  padding:var(--s-3) var(--pad-x);
+  padding-top:max(var(--s-3),env(safe-area-inset-top));
+  background:transparent;border-bottom:1px solid transparent;
+  transition:background-color var(--dur-3) var(--ease-out),
+             border-color var(--dur-3) var(--ease-out);
+}
+.topbar__logo{display:flex;align-items:center;line-height:0;
+              min-height:var(--tap);padding-inline:2px}
+.topbar__logo img{height:clamp(30px,7.5vw,40px);width:auto;transition:none}
+.topbar__nav{display:flex;align-items:center;gap:var(--s-1)}
+.iconbtn{
+  width:var(--tap);height:var(--tap);display:grid;place-items:center;
+  border-radius:var(--r-pill);color:var(--peach-500);
+  transition:background-color var(--dur-2) var(--ease-out),
+             color var(--dur-2) var(--ease-out),
+             transform var(--dur-1) var(--ease-out);
+}
+.iconbtn svg{width:22px;height:22px}
+.iconbtn:active{transform:scale(.92)}
+.iconbtn:focus-visible{outline:2px solid var(--peach-500);outline-offset:2px}
+@media (hover:hover){ .iconbtn:hover{background:rgba(249,206,174,.16)} }
+
+/* после ухода с hero панель садится на молочный фон и меняет цвета */
+.topbar.is-solid{
+  background:rgba(255,251,243,.94);border-bottom-color:var(--hairline);
+  backdrop-filter:blur(10px);
+}
+.topbar.is-solid .iconbtn{color:var(--rose-500)}
+.topbar.is-solid .iconbtn:focus-visible{outline-color:var(--rose-500)}
+@media (hover:hover){ .topbar.is-solid .iconbtn:hover{background:var(--peach-200)} }
+@supports not (backdrop-filter:blur(1px)){ .topbar.is-solid{background:var(--cream)} }
+/* телефон в панели дублирует липкую нижнюю кнопку — на мобиле лишний */
+@media (max-width:559px){ .iconbtn--call{display:none} }
+
 /* ═══ HERO ═══════════════════════════════════════════════════ */
 .hero{
   position:relative;isolation:isolate;background:var(--bg);color:var(--text);
-  padding:max(var(--s-6),env(safe-area-inset-top)) 0 0;
+  padding:calc(var(--tap) + var(--s-6) + env(safe-area-inset-top)) 0 0;
   min-height:100dvh;                    /* НЕ 100vh — на мобиле схлопнется */
-  display:grid;grid-template-rows:auto 1fr auto;
+  display:grid;grid-template-rows:1fr auto;
 }
-.hero__logo{height:clamp(44px,11vw,68px);width:auto}
 .hero__mid{display:flex;flex-direction:column;justify-content:center;
-           gap:var(--s-4);padding-block:var(--s-8) var(--s-9)}
+           gap:var(--s-4);padding-block:var(--s-5) var(--s-8)}
 .hero__h1{color:var(--text)}            /* #FEF4EC на бордовом = 10.44:1 */
 /* Дуга живёт на верхней кромке молочного блока, а не на дне .hero:
    иначе .hero__cta со своим фоном просто накрывает её. */
@@ -247,18 +284,27 @@ button,input,select{font:inherit;color:inherit}
   height:clamp(52px,13vw,120px);display:block;pointer-events:none;
 }
 .hero__cta .btn-row{margin-top:0}
-.hero__meta{margin-top:var(--s-5);color:var(--rose-400)}
-.hero__scroll{width:1px;height:40px;background:var(--rose-500);margin-top:var(--s-6);
-              transform-origin:top;transform:scaleY(0);animation:grow var(--dur-5) var(--ease-arc) .5s forwards}
-@keyframes grow{to{transform:scaleY(1)}}
+.hero__meta{margin-top:var(--s-4);color:var(--rose-400)}
+.hero__meta a{color:var(--rose-500);text-underline-offset:3px;
+              display:inline-block;padding-block:14px;margin-block:-14px}
+
+/* Фон hero: фото на всю площадь + бордовая вуаль. Вуаль обязательна —
+   без неё белый текст по светлым лепесткам нечитаем, а бренд теряется. */
+.hero__bg{position:absolute;inset:0;z-index:0;display:block}
+.hero__bg img{width:100%;height:100%;object-fit:cover;object-position:50% 42%}
+.hero__veil{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(64,0,26,.86) 0%,rgba(85,12,42,.72) 42%,rgba(113,19,57,.62) 100%),
+    linear-gradient(90deg,rgba(64,0,26,.55) 0%,rgba(64,0,26,0) 62%);
+}
+.hero__inner{position:relative;z-index:var(--z-content)}
+.hero__h1,.hero .lead,.hero .eyebrow{text-shadow:0 1px 14px rgba(48,0,20,.45)}
 
 @media (min-width:1024px){
-  .hero__inner{display:grid;grid-template-columns:1.25fr .75fr;gap:var(--gap-panel);align-items:center}
-  .hero__photo{border-radius:var(--arch);overflow:hidden;aspect-ratio:3/4;max-width:400px;
-               margin-inline-start:auto;box-shadow:var(--sh-plate)}
-  .hero__photo img{width:100%;height:100%;object-fit:cover}
+  .hero__mid{max-width:60ch}
+  .hero__bg img{object-position:70% 45%}
 }
-@media (max-width:1023px){ .hero__photo{display:none} }
 
 /* ═══ ТРИПТИХ ════════════════════════════════════════════════ */
 .choice{
@@ -351,8 +397,18 @@ button.ctl{text-align:left;display:flex;align-items:center}
 /* ── Звёздная доставка ─────────────────────────────────────── */
 .stars{
   background:var(--bg);color:var(--text);padding:var(--s-7) var(--s-6);
-  position:relative;overflow:hidden;border-radius:var(--r-panel);
+  position:relative;overflow:hidden;border-radius:var(--r-panel);isolation:isolate;
 }
+/* Кинематографичный фон секции. Кадр силуэтный, без узнаваемого лица —
+   лицензия Pexels запрещает подавать человека так, будто он и есть та
+   «знаменитость», которая привезёт букет. */
+.stars__bg{position:absolute;inset:0;z-index:0}
+.stars__bg img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.stars__veil{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(64,0,26,.90) 0%,rgba(85,12,42,.94) 45%,rgba(113,19,57,.97) 100%);
+}
+.stars > :not(.stars__bg):not(.stars__veil){position:relative;z-index:2}
 .chip{
   display:inline-flex;align-items:center;gap:var(--s-2);height:28px;
   padding-inline:var(--s-3);border-radius:var(--r-pill);
@@ -443,7 +499,7 @@ button.ctl{text-align:left;display:flex;align-items:center}
 .facts-line .mark{display:none;width:16px;height:16px;color:var(--divider);flex:none}
 @media (min-width:900px){ .facts-line .mark{display:block} }
 .facts-line a{color:inherit;text-underline-offset:3px;
-              display:inline-block;padding-block:9px;margin-block:-9px}
+              display:inline-block;padding-block:12px;margin-block:-12px}
 
 .quotes{display:grid;gap:var(--s-5);margin-top:var(--s-7)}
 @media (min-width:760px){ .quotes{grid-template-columns:1fr 1fr} }

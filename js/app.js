@@ -65,28 +65,31 @@
   /* ─── Галерея ─────────────────────────────────────────────────
      Замена фото: правится только этот массив. Файлы кладутся
      в assets/bouquets/, размер 420x420 (апскейл запрещён). */
+  /* Файлы «tile-NN» — реальные кадры Remy (видны фирменные ленты и логотип),
+     «g-NN» — премиальный сток под лицензией Pexels. Порядок чередует их,
+     чтобы разница в резкости не читалась как «часть фото хуже». */
   var GALLERY = [
-    { id: '01', cls: 'tile--hero', cap: 'Композиция дня',
-      alt: 'Композиция из гортензии, подсолнуха и роз в пастельных тонах на бордовом фоне салона Remy' },
-    { id: '04', cls: 'tile--sq',
+    { id: 'g-01', cls: 'tile--hero', w: 760,
+      alt: 'Букет из розовых роз на тёмном столе в классическом интерьере' },
+    { id: 'tile-04', cls: 'tile--sq',
       alt: 'Крупный букет из коралловых и персиковых роз с брендированными лентами Remy' },
-    { id: '06', cls: 'tile--sq',
-      alt: 'Большая авторская композиция из гортензии, лилий, подсолнухов и роз в коробке Remy' },
+    { id: 'g-03', cls: 'tile--sq', w: 460,
+      alt: 'Букет из тёмно-красных роз в кремовой шляпной коробке' },
     { plate: 'Моменты остаются навсегда' },
-    { id: '02', cls: 'tile--sq',
-      alt: 'Букет из пионовидных розовых и кремовых роз в матовой упаковке с лентами Remy' },
-    { id: '10', cls: 'tile--sq',
+    { id: 'g-05', cls: 'tile--sq', w: 460,
+      alt: 'Плотная композиция из кремовых и пудрово-розовых пионовидных роз' },
+    { id: 'tile-10', cls: 'tile--sq',
       alt: 'Плотный букет из ярко-розовых кустовых роз с бордовой лентой Remy' },
-    { id: '03', cls: 'tile--sq',
-      alt: 'Букет из синей гортензии с жёлтыми и белыми розами' },
-    { id: '09', cls: 'tile--sq',
-      alt: 'Круглый букет из голубой гортензии с жёлтыми и белыми хризантемами' },
-    { id: '11', cls: 'tile--hero', cap: 'Наш бутик на Абая',
+    { id: 'tile-11', cls: 'tile--hero', cap: 'Наш бутик на Абая',
       alt: 'Витрина бутика Remy: букеты и шляпные коробки на подсвеченных стеллажах' }
   ];
 
+  /* Карточки ролей, а НЕ портреты конкретных артистов: состав ещё не собран,
+     и лицо на карточке обещало бы конкретного человека. Поэтому кадры
+     атмосферные — инструмент, сцена, свет. У кого фото нет, показывается
+     гравированная арка со знаком. */
   var ARTISTS = [
-    { role: 'Актёр' }, { role: 'Музыкант' }, { role: 'Скрипка' }, { role: 'Ваш сценарий' }
+    { role: 'Музыкант' }, { role: 'Вокал' }, { role: 'Актёр' }, { role: 'Ваш сценарий' }
   ];
 
   /* ─── Утилиты ─────────────────────────────────────────────── */
@@ -154,12 +157,13 @@
       if (t.plate) {
         return '<div class="plate"><p>' + t.plate + '</p></div>';
       }
-      var base = 'assets/bouquets/tile-' + t.id;
+      var base = 'assets/bouquets/' + t.id;
+      var px = t.w || 420;
       var cap = t.cap ? '<figcaption class="tile__cap">' + t.cap + '</figcaption>' : '';
       return '<figure class="tile ' + t.cls + '" style="background-image:url(' + base + '-lqip.webp)">' +
         '<picture>' +
           '<source srcset="' + base + '.avif" type="image/avif">' +
-          '<img src="' + base + '.webp" alt="' + t.alt + '" width="420" height="420" ' +
+          '<img src="' + base + '.webp" alt="' + t.alt + '" width="' + px + '" height="' + px + '" ' +
                'loading="lazy" decoding="async">' +
         '</picture>' + cap +
       '</figure>';
@@ -323,12 +327,19 @@
   /* ─── Липкая панель ───────────────────────────────────────── */
   function stickyBar() {
     var bar = $('#ctaBar');
+    var top = $('#topbar');
     var sentinel = $('#hero-sentinel');
-    if (!bar || !sentinel || !('IntersectionObserver' in window)) return;
+    if (!sentinel || !('IntersectionObserver' in window)) return;
     new IntersectionObserver(function (entries) {
-      bar.classList.toggle('is-in', !entries[0].isIntersecting);
+      var past = !entries[0].isIntersecting;
+      if (bar) bar.classList.toggle('is-in', past);
+      // панель наверху становится непрозрачной, только когда под ней
+      // уже не бордовое поле — иначе персиковые иконки лягут на молочное
+      if (top) top.classList.toggle('is-solid', past);
     }, { rootMargin: '0px' }).observe(sentinel);
-    bar.addEventListener('transitionend', function () { bar.style.willChange = 'auto'; });
+    if (bar) {
+      bar.addEventListener('transitionend', function () { bar.style.willChange = 'auto'; });
+    }
   }
 
   /* ─── Reveal ──────────────────────────────────────────────── */

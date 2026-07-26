@@ -10,3 +10,4 @@ tools/*.png
 !tools/qr-*.png
 __pycache__/
 *.pyc
+tools/_stock/
