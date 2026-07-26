@@ -373,6 +373,7 @@ button,input,select{font:inherit;color:inherit}
              transform var(--dur-1) var(--ease-out);
 }
 .abtn--solid{background:var(--cream);color:var(--rose-500)}  /* 10.97:1 */
+.abtn .ic{width:22px;height:22px;flex:none}
 .abtn--sm{min-height:46px;font-size:var(--fs-micro);letter-spacing:.04em;
           padding-inline:var(--s-4)}
 .abtn:active{transform:scale(.985)}
