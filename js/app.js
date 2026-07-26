@@ -137,50 +137,22 @@
     return Array.prototype.slice.call((r || document).querySelectorAll(s));
   };
 
-  var _src = null;
-  function source() {
-    if (_src) return _src;
-    try {
-      var q = new URLSearchParams(location.search);
-      /* ?s=vitrina — короткая метка из печатного QR: чем короче URL,
-         тем ниже version кода и надёжнее скан с наклейки 3 см.
-         utm_* поддерживаем для ссылок из Instagram и рассылок. */
-      var s = q.get('s') || q.get('utm_content') || q.get('utm_source');
-      if (s) { _src = s; sessionStorage.setItem('remy_src', s); }
-      _src = _src || sessionStorage.getItem('remy_src') || t('waSite');
-      return _src;
-    } catch (e) { return _src || t('waSite'); }
+  function fill(key, vars) {
+    var s = t(key);
+    for (var k in vars) {
+      if (vars.hasOwnProperty(k)) s = s.replace('{' + k + '}', vars[k]);
+    }
+    return s;
   }
 
-  /* Порядок строк не случайный: WhatsApp ставит курсор в КОНЕЦ
-     префилла, поэтому служебные строки идут первыми, а единственная
-     строка под дозаполнение — последней, прямо под курсором. */
-  function head(c, extra) {
-    var lines = [];
-    if (c.city) lines.push(t('waCityLine') + ': ' + c.city);
-    if (extra) lines.push(extra);
-    lines.push(t('waSrcLine') + ': ' + source());
-    return lines.join('\n');
-  }
-
-  var KIND = {
-    order:    ['waOrder', 'waOrderTail'],
-    ask:      ['waAsk', 'waAskTail'],
-    vip:      ['waVip', 'waVipTail'],
-    today:    ['waToday', 'waTodayTail'],
-    cert:     ['waCert', 'waCertTail'],
-    item:     ['waItem', 'waItemTail'],
-    question: ['waQuestion', 'waQuestionTail']
-  };
-
-  /* encodeURIComponent, НЕ encodeURI: иначе «&» обрежет сообщение.
-     Кодировать один раз — двойное кодирование покажет «%D0%9F» в чате. */
-  function waLink(kind, city, item) {
-    var k = KIND[kind] || KIND.question;
-    var extra = item ? t('waItemLine') + ': ' + item : null;
-    var text = t('waHello') + ' ' + t(k[0]) + '\n' +
-               head({ city: city || null }, extra) + '\n\n' + t(k[1]);
-    return 'https://wa.me/' + CONTACT.waPhone + '?text=' + encodeURIComponent(text);
+  /* Сообщение — ровно одна строка. Ни города, ни метки QR, ни
+     названия букета: заказчик решил, что детали менеджер выяснит
+     в переписке. Своя фраза осталась только у VIP и сертификата.
+     encodeURIComponent, НЕ encodeURI: иначе «&» обрежет текст. */
+  function waLink(kind) {
+    var key = kind === 'vip' ? 'waVip' : kind === 'cert' ? 'waCert' : 'waOrder';
+    return 'https://wa.me/' + CONTACT.waPhone + '?text=' +
+           encodeURIComponent(t('waHello') + ' ' + t(key));
   }
 
   function goal(name) {
@@ -270,18 +242,11 @@
     if (orderBtn) {
       orderBtn.setAttribute('aria-disabled', 'false');
       orderBtn.textContent = cityBtnText(c);
-      orderBtn.href = waLink(c.mode === 'own' ? 'order' : 'ask', c.name);
+      orderBtn.href = waLink('order');
     }
     if (trigger) trigger.textContent = c.name;
     if (ctaCtx) ctaCtx.textContent = c.name;
 
-    all('[data-wa]').forEach(function (el) {
-      if (el === orderBtn) return;
-      if (el.tagName === 'A') el.href = waLink(el.getAttribute('data-wa'), c.name);
-    });
-    all('[data-item]').forEach(function (el) {
-      el.href = waLink('item', c.name, el.getAttribute('data-item'));
-    });
     goal(c.mode === 'own' ? 'city_almaty' : 'city_other');
   }
 
@@ -411,7 +376,7 @@
       /* href переписываем ВСЕГДА: у карточки в контактах он уже прописан
          в разметке, и при проверке «только если #» она открывала пустой
          чат — без приветствия, города и метки QR. */
-      if (el.tagName === 'A') el.href = waLink(kind, null);
+      if (el.tagName === 'A') el.href = waLink(kind);
       if (el._wired) return;
       el._wired = true;
       el.addEventListener('click', function (e) {
@@ -428,7 +393,7 @@
     });
 
     all('[data-item]').forEach(function (el) {
-      el.href = waLink('item', null, el.getAttribute('data-item'));
+      el.href = waLink('order');
       if (el._wired) return;
       el._wired = true;
       el.addEventListener('click', function () { markWa(); goal('wa_item'); });
@@ -472,14 +437,10 @@
 
       /* Эндпоинта ещё нет — не делаем вид, что заявка ушла.
          Открываем WhatsApp с уже вписанным контактом. */
-      var c = currentCity();
-      var text = [t('waHello') + ' ' + t('waVip'), '',
-        t('waContactLine') + ': ' + val,
-        t('waCityLine') + ': ' + (c ? c.name : '—'), '',
-        t('waSrcLine') + ': ' + source()].join('\n');
       note.textContent = t('wlOpening');
       markWa();
-      window.location.href = 'https://wa.me/' + CONTACT.waPhone + '?text=' + encodeURIComponent(text);
+      window.location.href = 'https://wa.me/' + CONTACT.waPhone + '?text=' +
+        encodeURIComponent(t('waHello') + ' ' + fill('waWaitlist', { contact: val }));
     });
   }
 

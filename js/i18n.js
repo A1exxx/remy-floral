@@ -99,15 +99,21 @@ window.I18N = {
     legal: 'Сайт не является публичной офертой. Состав букета, наличие и цену уточняйте у флориста.',
 
     /* — шаблоны WhatsApp — */
+    /* — шаблоны WhatsApp —
+       Одна строка: заказчик просил короткое сообщение. Город и метка
+       QR из текста убраны сознательно. Название букета остаётся —
+       без него флорист не поймёт, какую карточку нажали. */
+    /* — шаблоны WhatsApp —
+       Одна строка, без города, метки и названия букета: заказчик
+       решил, что менеджер выяснит детали в переписке сам.
+       Отдельными остались только VIP и сертификат — это другие
+       услуги, и «хочу заказать букет» там ввело бы в заблуждение. */
     waHello: 'Здравствуйте, Remy!',
-    waOrder: 'Хочу заказать букет.', waOrderTail: 'Повод и когда нужно: ',
-    waAsk: 'Нужен букет в другой город.', waAskTail: 'Подскажите, получится ли доставить, за какой срок и сколько будет стоить. Дата: ',
-    waVip: 'Интересует VIP-ДОСТАВКА — букет привозит знаменитость.', waVipTail: 'Хочу первым узнать имена артистов и цены. Повод: ',
-    waToday: 'Покажите, какие букеты есть сегодня.', waTodayTail: 'Ищу букет: ',
-    waCert: 'Хочу подарочный сертификат.', waCertTail: 'На какую сумму и когда нужен: ',
-    waItem: 'Хочу букет из каталога.', waItemTail: 'Когда нужен и кому: ',
-    waQuestion: 'Пишу с сайта.', waQuestionTail: 'Хочу спросить: ',
-    waCityLine: 'Город', waSrcLine: 'Источник', waItemLine: 'Букет', waSite: 'сайт'
+    waOrder: 'Хочу заказать букет.',
+    waVip: 'Интересует VIP-доставка.',
+    waCert: 'Хочу подарочный сертификат.',
+    waWaitlist: 'Запишите меня на VIP-доставку. Мой контакт: {contact}'
+
   },
 
   en: {
@@ -196,14 +202,11 @@ window.I18N = {
     legal: 'This site is not a public offer. Confirm composition, availability and price with the florist.',
 
     waHello: 'Hello, Remy!',
-    waOrder: 'I would like to order a bouquet.', waOrderTail: 'Occasion and date: ',
-    waAsk: 'I need a bouquet in another city.', waAskTail: 'Please tell me if you can deliver, how long it takes and what it costs. Date: ',
-    waVip: 'I am interested in VIP DELIVERY — a celebrity brings the bouquet.', waVipTail: 'I want to be first to hear the artists and prices. Occasion: ',
-    waToday: 'Please show me what bouquets you have today.', waTodayTail: 'I am looking for: ',
-    waCert: 'I would like a gift certificate.', waCertTail: 'Amount and date needed: ',
-    waItem: 'I would like a bouquet from the catalogue.', waItemTail: 'When and for whom: ',
-    waQuestion: 'Writing from your site.', waQuestionTail: 'My question: ',
-    waCityLine: 'City', waSrcLine: 'Source', waItemLine: 'Bouquet', waSite: 'site'
+    waOrder: 'I would like to order a bouquet.',
+    waVip: 'I am interested in VIP delivery.',
+    waCert: 'I would like a gift certificate.',
+    waWaitlist: 'Please add me to the VIP delivery list. My contact: {contact}'
+
   },
 
   kk: {
@@ -292,13 +295,10 @@ window.I18N = {
     legal: 'Сайт жария оферта емес. Гүл шоғының құрамын, бар-жоғын және бағасын флористтен нақтылаңыз.',
 
     waHello: 'Сәлеметсіз бе, Remy!',
-    waOrder: 'Гүл шоғына тапсырыс бергім келеді.', waOrderTail: 'Себебі және қашан керек: ',
-    waAsk: 'Басқа қалаға гүл шоғы керек.', waAskTail: 'Жеткізе аласыздар ма, қанша мерзімде және қанша тұрады? Күні: ',
-    waVip: 'VIP ЖЕТКІЗУ қызықтырады — гүл шоғын атақты адам жеткізеді.', waVipTail: 'Әртістердің есімдері мен бағасын бірінші болып білгім келеді. Себебі: ',
-    waToday: 'Бүгін қандай гүл шоқтары бар екенін көрсетіңізші.', waTodayTail: 'Іздеп жүрген гүлім: ',
-    waCert: 'Сыйлық сертификаты керек.', waCertTail: 'Қандай сомаға және қашан керек: ',
-    waItem: 'Каталогтан гүл шоғы керек.', waItemTail: 'Қашан және кімге: ',
-    waQuestion: 'Сайттан жазып отырмын.', waQuestionTail: 'Сұрағым бар: ',
-    waCityLine: 'Қала', waSrcLine: 'Дереккөз', waItemLine: 'Гүл шоғы', waSite: 'сайт'
+    waOrder: 'Гүл шоғына тапсырыс бергім келеді.',
+    waVip: 'VIP жеткізу қызықтырады.',
+    waCert: 'Сыйлық сертификаты керек.',
+    waWaitlist: 'Мені VIP жеткізу тізіміне жазыңыз. Байланысым: {contact}'
+
   }
 };
