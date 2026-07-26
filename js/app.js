@@ -48,39 +48,6 @@
     return 'ru';   // Алматы — сайт по умолчанию русский
   }
 
-  /* ─── Города ──────────────────────────────────────────────────
-     mode 'own'  — доставляем сами
-     mode 'ask'  — подтверждаем возможность и срок вручную
-     acc — винительный падеж, нужен только русскому */
-  var CITIES = [
-    { name: 'Алматы', acc: 'Алматы', mode: 'own' },
-    { name: 'Астана', acc: 'Астану', mode: 'ask' },
-    { name: 'Шымкент', acc: 'Шымкент', mode: 'ask' },
-    { name: 'Актобе', acc: 'Актобе', mode: 'ask' },
-    { name: 'Актау', acc: 'Актау', mode: 'ask' },
-    { name: 'Атырау', acc: 'Атырау', mode: 'ask' },
-    { name: 'Балхаш', acc: 'Балхаш', mode: 'ask' },
-    { name: 'Жанаозен', acc: 'Жанаозен', mode: 'ask' },
-    { name: 'Жезказган', acc: 'Жезказган', mode: 'ask' },
-    { name: 'Караганда', acc: 'Караганду', mode: 'ask' },
-    { name: 'Каскелен', acc: 'Каскелен', mode: 'ask' },
-    { name: 'Кокшетау', acc: 'Кокшетау', mode: 'ask' },
-    { name: 'Конаев', acc: 'Конаев', mode: 'ask' },
-    { name: 'Костанай', acc: 'Костанай', mode: 'ask' },
-    { name: 'Кызылорда', acc: 'Кызылорду', mode: 'ask' },
-    { name: 'Павлодар', acc: 'Павлодар', mode: 'ask' },
-    { name: 'Петропавловск', acc: 'Петропавловск', mode: 'ask' },
-    { name: 'Рудный', acc: 'Рудный', mode: 'ask' },
-    { name: 'Семей', acc: 'Семей', mode: 'ask' },
-    { name: 'Талдыкорган', acc: 'Талдыкорган', mode: 'ask' },
-    { name: 'Тараз', acc: 'Тараз', mode: 'ask' },
-    { name: 'Темиртау', acc: 'Темиртау', mode: 'ask' },
-    { name: 'Туркестан', acc: 'Туркестан', mode: 'ask' },
-    { name: 'Уральск', acc: 'Уральск', mode: 'ask' },
-    { name: 'Усть-Каменогорск', acc: 'Усть-Каменогорск', mode: 'ask' },
-    { name: 'Экибастуз', acc: 'Экибастуз', mode: 'ask' }
-  ];
-
   /* ─── Каталог ─────────────────────────────────────────────────
      ЕДИНСТВЕННОЕ место с ценами. Цифры взяты с публикаций самого
      Remy в Instagram (они вожжены в кадр: «- 34 000»), поэтому это
@@ -119,17 +86,6 @@
   function money(n) {
     return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₸';
   }
-
-  /* ─── Фирменные носители из брендбука ─────────────────────── */
-  var PACKS = [
-    { id: 'cone',    alt: 'Букет из калл в фирменном бордовом конусе Remy' },
-    { id: 'hatbox',  alt: 'Шляпная коробка Remy с красными герберами и лилиями' },
-    { id: 'boxes',   alt: 'Фирменные тубусы Remy в бордовом и кремовом' },
-    { id: 'bags',    alt: 'Пакеты Remy бордовый и кремовый с фирменными дугами' },
-    { id: 'ribbon',  alt: 'Бордовая лента Remy с золотым логотипом' },
-    { id: 'tissue',  alt: 'Фирменная упаковочная бумага Remy с узором из дуг' },
-    { id: 'shopper', alt: 'Бордовый шоппер Remy с логотипом' }
-  ];
 
   /* ─── Утилиты ─────────────────────────────────────────────── */
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -205,156 +161,6 @@
     });
   }
 
-  function buildPacks() {
-    var box = $('#packs');
-    if (!box) return;
-    box.innerHTML = PACKS.map(function (p) {
-      var base = 'assets/brand/' + p.id;
-      return '<figure class="pack" style="background-image:url(' + base + '-lqip.webp)">' +
-        '<picture>' +
-          '<source srcset="' + base + '.avif" type="image/avif">' +
-          '<img src="' + base + '.webp" alt="' + p.alt + '" loading="lazy" decoding="async">' +
-        '</picture>' +
-      '</figure>';
-    }).join('');
-  }
-
-  /* ─── Селектор города ─────────────────────────────────────── */
-  var sel, trigger, note, orderBtn, sheet, list, search, count, ctaCtx;
-
-  function currentCity() {
-    if (!sel || !sel.value) return null;
-    for (var i = 0; i < CITIES.length; i++) {
-      if (CITIES[i].name === sel.value) return CITIES[i];
-    }
-    return null;
-  }
-
-  function cityBtnText(c) {
-    var name = lang === 'ru' ? c.acc : c.name;
-    return (c.mode === 'own' ? t('cityBtnOwn') : t('cityBtnAsk')).replace('{city}', name);
-  }
-
-  /* Каждая ветка проверяет свой элемент отдельно: на главной и на
-     vip.html селектора города нет, и обращение к orderBtn роняло бы
-     весь скрипт вместе с кнопками заказа. */
-  function syncCity() {
-    var c = currentCity();
-    var noteText = $('#cityNote span');
-
-    if (!c) {
-      if (noteText) noteText.textContent = t('noteEmpty');
-      if (orderBtn) {
-        orderBtn.textContent = t('cityPickFirst');
-        orderBtn.setAttribute('aria-disabled', 'true');
-        orderBtn.href = '#';
-      }
-      if (ctaCtx) ctaCtx.textContent = '';
-      return;
-    }
-
-    if (noteText) noteText.textContent = t(c.mode === 'own' ? 'noteOwn' : 'noteAsk');
-    if (orderBtn) {
-      orderBtn.setAttribute('aria-disabled', 'false');
-      orderBtn.textContent = cityBtnText(c);
-      orderBtn.href = waLink('order');
-    }
-    if (trigger) trigger.textContent = c.name;
-    if (ctaCtx) ctaCtx.textContent = c.name;
-
-    goal(c.mode === 'own' ? 'city_almaty' : 'city_other');
-  }
-
-  function buildSelect() {
-    sel = $('#city');
-    if (!sel) return;
-    var keep = sel.value;
-    var own = CITIES.filter(function (c) { return c.mode === 'own'; });
-    var ask = CITIES.filter(function (c) { return c.mode === 'ask'; });
-    var opt = function (c) { return '<option value="' + c.name + '">' + c.name + '</option>'; };
-    sel.innerHTML =
-      '<option value="" disabled' + (keep ? '' : ' selected') + '>' + t('cityLabel') + '</option>' +
-      '<optgroup label="' + t('cityGroupNow') + '">' + own.map(opt).join('') + '</optgroup>' +
-      '<optgroup label="' + t('cityGroupAsk') + '">' + ask.map(opt).join('') + '</optgroup>';
-    if (keep) sel.value = keep;
-    if (!sel._wired) { sel.addEventListener('change', syncCity); sel._wired = true; }
-  }
-
-  function renderList(query) {
-    var q = (query || '').trim().toLowerCase();
-    var match = function (c) { return !q || c.name.toLowerCase().indexOf(q) > -1; };
-    var own = CITIES.filter(function (c) { return c.mode === 'own' && match(c); });
-    var ask = CITIES.filter(function (c) { return c.mode === 'ask' && match(c); });
-    var total = own.length + ask.length;
-
-    if (!total) {
-      list.innerHTML = '<p class="sheet__empty">' + t('cityEmpty') + '</p>';
-    } else {
-      var row = function (c) {
-        var chip = c.mode === 'own'
-          ? '<span class="opt__chip opt__chip--now">' + t('cityChipNow') + '</span>'
-          : '<span class="opt__chip opt__chip--ask">' + t('cityChipAsk') + '</span>';
-        var on = sel.value === c.name;
-        return '<button type="button" class="opt" role="option" data-city="' + c.name + '" ' +
-               'aria-selected="' + (on ? 'true' : 'false') + '">' +
-          '<span class="opt__name">' + c.name + '</span>' + chip +
-          '<svg class="opt__check" aria-hidden="true"><use href="#i-check"/></svg>' +
-        '</button>';
-      };
-      list.innerHTML =
-        (own.length ? '<p class="grp">' + t('cityGroupNow') + '</p>' + own.map(row).join('') : '') +
-        (ask.length ? '<p class="grp">' + t('cityGroupAsk') + '</p>' + ask.map(row).join('') : '');
-    }
-    if (count) count.textContent = total ? total : t('cityEmpty');
-  }
-
-  function openSheet() {
-    renderList('');
-    search.value = '';
-    sheet.showModal();
-    trigger.setAttribute('aria-expanded', 'true');
-    // автофокус в поиск только на десктопе: на мобиле клавиатура закроет список
-    if (window.matchMedia('(min-width:1024px)').matches) search.focus();
-  }
-
-  function closeSheet() {
-    sheet.close();
-    trigger.setAttribute('aria-expanded', 'false');
-    trigger.focus();
-  }
-
-  function buildSheet() {
-    trigger = $('#cityTrigger');
-    sheet = $('#citySheet');
-    list = $('#cityList');
-    search = $('#citySearch');
-    count = $('#cityCount');
-    if (!sel || !trigger || !sheet || typeof sheet.showModal !== 'function') return;
-
-    // апгрейд: нативный select уходит в sr-only, но остаётся источником истины
-    sel.classList.add('sr-only');
-    sel.setAttribute('tabindex', '-1');
-    sel.setAttribute('aria-hidden', 'true');
-    trigger.hidden = false;
-    trigger.textContent = t('cityLabel');
-
-    trigger.addEventListener('click', openSheet);
-    $('#sheetClose').addEventListener('click', closeSheet);
-    search.addEventListener('input', function () { renderList(search.value); });
-    sheet.addEventListener('cancel', function () {
-      trigger.setAttribute('aria-expanded', 'false');
-    });
-    sheet.addEventListener('click', function (e) {
-      if (e.target === sheet) closeSheet();          // тап по scrim
-    });
-    list.addEventListener('click', function (e) {
-      var btn = e.target.closest('[data-city]');
-      if (!btn) return;
-      sel.value = btn.getAttribute('data-city');
-      syncCity();
-      closeSheet();
-    });
-  }
 
   /* ─── Reveal ──────────────────────────────────────────────── */
   function reveal() {
@@ -394,14 +200,7 @@
       if (el.tagName === 'A') el.href = waLink(kind);
       if (el._wired) return;
       el._wired = true;
-      el.addEventListener('click', function (e) {
-        if (el.getAttribute('aria-disabled') === 'true') {
-          e.preventDefault();
-          var n = $('#cityNote span');
-          if (n) n.textContent = t('cityPickFirst');
-          if (trigger) trigger.focus();
-          return;
-        }
+      el.addEventListener('click', function () {
         markWa();
         goal(kind === 'vip' ? 'wa_vip' : 'wa_order');
       });
@@ -485,9 +284,6 @@
     if (rebuild) {
       buildCards($('#cards'), 4);
       buildCards($('#catalog'), 0);
-      buildSelect();
-      if (trigger && !currentCity()) trigger.textContent = t('cityLabel');
-      syncCity();
       wireLinks();
     }
   }
@@ -522,21 +318,15 @@
 
   /* ─── Старт ───────────────────────────────────────────────── */
   function init() {
-    orderBtn = $('#orderBtn');
-    ctaCtx = $('#ctaCtx');
     lang = initialLang();
 
     buildCards($('#cards'), 4);        // витрина
     buildCards($('#catalog'), 0);      // полный каталог
-    buildPacks();
-    buildSelect();
-    buildSheet();
     wireRail();
     wireLang();
     applyLang(lang, false);
     wireLinks();
     wireForm();
-    syncCity();
     reveal();
   }
 
