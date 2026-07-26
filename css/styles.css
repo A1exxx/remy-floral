@@ -401,8 +401,14 @@ button,input,select{font:inherit;color:inherit}
 }
 .card__foot{
   margin-top:auto;padding-top:var(--s-3);border-top:1px solid var(--hairline);
-  display:flex;align-items:baseline;justify-content:space-between;
-  gap:2px var(--s-2);flex-wrap:wrap;   /* на узкой карточке «Заказать» уходит вниз, а не жмёт цену */
+  /* На узкой карточке — строго в столбик. При flex-wrap перенос случался
+     только у части карточек, и линии в соседних колонках вставали на
+     разной высоте. Фиксированная раскладка гарантирует выравнивание. */
+  display:flex;flex-direction:column;gap:2px;
+}
+@media (min-width:900px){
+  .card__foot{flex-direction:row;align-items:baseline;
+              justify-content:space-between;gap:var(--s-2)}
 }
 .card__price{font-size:var(--fs-lead);font-weight:var(--fw-med);color:var(--text)}
 .card__go{font-size:var(--fs-micro);color:var(--accent);white-space:nowrap}
