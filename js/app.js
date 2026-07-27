@@ -169,20 +169,31 @@
      процента. Поэтому меряем фактическую ширину и подбираем размер.
      Пересчитываем после загрузки шрифтов, на поворот экрана и при
      смене языка — у каждого перевода своя длина. */
-  var MAX_TITLE = 28;   // px, иначе подпись начинает спорить с логотипом
+  /* Кегль привязан к ШИРИНЕ ЛОГОТИПА, а не к экрану: тогда связка
+     «логотип + строка» выглядит одинаково и на телефоне, и на
+     мониторе — меняется масштаб, а не пропорции. Сверху всё равно
+     стоит ограничение по ширине контейнера, чтобы строка никогда
+     не обрезалась. */
+  var TITLE_RATIO = 0.082;   // доля от ширины логотипа
 
   function fitTitle() {
     var el = $('.cover__title');
     if (!el || !el.parentElement) return;
     var avail = el.parentElement.clientWidth;
     if (!avail) return;
+
     el.style.fontSize = '100px';
     var w = el.scrollWidth;
     el.style.fontSize = '';
     if (!w) return;
+
     /* 0.94 — запас на кернинг и на округление ширины в разных движках */
-    var size = Math.min(MAX_TITLE, Math.floor(100 * avail * 0.94 / w));
-    el.style.fontSize = Math.max(11, size) + 'px';
+    var byBox = 100 * avail * 0.94 / w;
+    var mark = $('.cover__mark');
+    var markW = mark ? mark.getBoundingClientRect().width : 0;
+    var byLogo = markW > 50 ? markW * TITLE_RATIO : byBox;
+
+    el.style.fontSize = Math.max(11, Math.floor(Math.min(byLogo, byBox))) + 'px';
   }
 
   function watchTitle() {

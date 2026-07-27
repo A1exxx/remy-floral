@@ -329,7 +329,11 @@ button,input,select{font:inherit;color:inherit}
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;gap:clamp(14px,2.6vh,26px);
 }
-.cover__mark{width:clamp(190px,50vw,400px);height:auto}
+/* Размер лого держим и по ширине, и по ВЫСОТЕ экрана: на ноутбуке
+   1366x768 места по вертикали куда меньше, чем по горизонтали, и
+   чисто ширинная формула выдавливала бы кнопки за экран.
+   56vh по ширине лого = ~30vh по высоте (пропорция 470:256). */
+.cover__mark{width:clamp(190px,min(52vw,56vh),560px);height:auto}
 
 /* Капс в засечном — так же, как брендбук набирает эту фразу на
    баннере (стр 38) и на витрине (стр 35).
@@ -386,6 +390,22 @@ button,input,select{font:inherit;color:inherit}
 @media (hover:hover){
   .abtn:hover{background:rgba(249,206,174,.16)}
   .abtn--solid:hover{background:rgba(249,206,174,.86)}
+}
+
+/* Телефон в горизонтали: высоты 390px не хватает на колонку из
+   четырёх кнопок, экран начинал прокручиваться. Сжимаем связку и
+   раскладываем кнопки в два столбца. */
+@media (max-height:560px) and (orientation:landscape){
+  .cover{padding-block:calc(var(--tap) + var(--s-3)) var(--s-4)}
+  .cover__mark{width:clamp(140px,min(34vw,44vh),300px)}
+  .cover__inner{gap:6px}
+  .cover__actions{max-width:720px;display:grid;grid-template-columns:1fr 1fr;
+                  gap:var(--s-3);padding-top:var(--s-4)}
+  .cover__actions .abtn{min-height:46px}
+  /* В горизонтали адрес встаёт четвёртой ячейкой сетки, а не во всю
+     ширину: иначе он занимал бы третий ряд и экран не сходился. */
+  .abtn--wide{grid-column:auto;justify-self:stretch;min-width:0}
+  .cover__hours{margin-top:2px}
 }
 
 /* На широком экране три главных действия встают в ряд — экран
