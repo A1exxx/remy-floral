@@ -162,6 +162,44 @@
   }
 
 
+  /* ─── Подгонка строки бренда ──────────────────────────────────
+     Строка обязана оставаться в ОДНУ линию и не обрезаться ни на
+     одном экране. Считать кегль в vw нельзя: ширина буквы зависит
+     от шрифта, а он грузится позже, и у разных браузеров свои доли
+     процента. Поэтому меряем фактическую ширину и подбираем размер.
+     Пересчитываем после загрузки шрифтов, на поворот экрана и при
+     смене языка — у каждого перевода своя длина. */
+  var MAX_TITLE = 28;   // px, иначе подпись начинает спорить с логотипом
+
+  function fitTitle() {
+    var el = $('.cover__title');
+    if (!el || !el.parentElement) return;
+    var avail = el.parentElement.clientWidth;
+    if (!avail) return;
+    el.style.fontSize = '100px';
+    var w = el.scrollWidth;
+    el.style.fontSize = '';
+    if (!w) return;
+    /* 0.94 — запас на кернинг и на округление ширины в разных движках */
+    var size = Math.min(MAX_TITLE, Math.floor(100 * avail * 0.94 / w));
+    el.style.fontSize = Math.max(11, size) + 'px';
+  }
+
+  function watchTitle() {
+    if (!$('.cover__title')) return;
+    fitTitle();
+    /* Шрифт приезжает после первой отрисовки — без этого размер
+       остался бы посчитанным по подменному шрифту. */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(fitTitle);
+    }
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t);
+      t = setTimeout(fitTitle, 120);
+    });
+  }
+
   /* ─── Reveal ──────────────────────────────────────────────── */
   function reveal() {
     var items = document.querySelectorAll('.reveal');
@@ -285,6 +323,7 @@
       buildCards($('#cards'), 4);
       buildCards($('#catalog'), 0);
       wireLinks();
+      fitTitle();
     }
   }
 
@@ -327,6 +366,7 @@
     applyLang(lang, false);
     wireLinks();
     wireForm();
+    watchTitle();
     reveal();
   }
 
