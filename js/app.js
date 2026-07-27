@@ -197,13 +197,30 @@
   }
 
   function watchTitle() {
-    if (!$('.cover__title')) return;
+    var el = $('.cover__title');
+    if (!el) return;
     fitTitle();
+
     /* Шрифт приезжает после первой отрисовки — без этого размер
        остался бы посчитанным по подменному шрифту. */
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(fitTitle);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitTitle);
+
+    /* ResizeObserver, а не событие resize: размер логотипа зависит и
+       от высоты экрана (56vh), а событие resize не всегда доезжает —
+       поворот телефона, панель браузера, появление полосы прокрутки.
+       Наблюдаем за самим логотипом: его ширина и есть наш масштаб. */
+    var box = $('.cover__mark') || el.parentElement;
+    if (window.ResizeObserver) {
+      var last = 0;
+      new ResizeObserver(function (entries) {
+        var w = Math.round(entries[0].contentRect.width);
+        if (w === last) return;      // высота меняется от кегля — не зациклиться
+        last = w;
+        fitTitle();
+      }).observe(box);
+      return;
     }
+
     var t;
     window.addEventListener('resize', function () {
       clearTimeout(t);
