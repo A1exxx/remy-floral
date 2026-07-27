@@ -405,7 +405,8 @@ button,input,select{font:inherit;color:inherit}
   /* В горизонтали адрес встаёт четвёртой ячейкой сетки, а не во всю
      ширину: иначе он занимал бы третий ряд и экран не сходился. */
   .abtn--wide{grid-column:auto;justify-self:stretch;min-width:0}
-  .cover__hours{margin-top:2px}
+  /* часы — под обе колонки, иначе прижимаются к левой */
+  .cover__hours{grid-column:1 / -1;margin-top:2px}
 }
 
 /* На широком экране три главных действия встают в ряд — экран
